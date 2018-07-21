@@ -1,0 +1,35 @@
+{
+  "name": "payla-api",
+  "version": "0.0.1",
+  "description": "REST API for the Payla app to interact with different blockchains.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node build/index.js",
+    "dev": "node src/index.dev.js",
+    "build": "./node_modules/.bin/babel ./src --experimental --source-maps-inline -d ./build",
+    "test": "node_modules/.bin/nyc node_modules/.bin/_mocha --compilers js:babel-register -- recursive",
+    "lint": "./node_modules/.bin/eslint --ext .js src/ test/"
+  },
+  "author": "Timothy E. Johansson <timothy@blockfirm.se>",
+  "website": "https://payla.app",
+  "copyright": "© 2018 Blockfirm AB",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blockfirm/payla-api.git"
+  },
+  "dependencies": {
+    "restify": "^7.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.7.1",
+    "mocha": "^3.5.3",
+    "nyc": "^11.3.0",
+    "proxyquire": "^1.8.0",
+    "sinon": "^4.0.0"
+  }
+}
