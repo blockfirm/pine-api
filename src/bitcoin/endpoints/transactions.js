@@ -14,7 +14,12 @@ export function post(request, response) {
       );
     }
 
-    // TODO: Implement.
-    response.send({ txid: 'test' });
+    return this.client.sendRawTransaction(transaction)
+      .then((txid) => {
+        response.send({ txid });
+      })
+      .catch((error) => {
+        throw new HttpInternalServerError(error.message);
+      });
   });
 }
