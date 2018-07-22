@@ -41,14 +41,14 @@ Scans the bitcoin blockchain for transactions matching a public key.
 Returns the transactions together with extra vin data and other useful information about each transaction, e.g. wether it is pending or not.
 
 ### `POST` /v1/bitcoin/transactions  
-Broadcasts a transaction to the Bitcoin network. Body must be a serialized transaction in raw format
+Broadcasts a transaction to the Bitcoin network. The transaction must be serialized in raw format
 (https://bitcoin.org/en/developer-reference#raw-transaction-format).
 
-**Body**  
-Serialized transaction in raw format (https://bitcoin.org/en/developer-reference#raw-transaction-format)
+**Parameters**  
+* `transaction` – (*string*) Serialized and signed transaction in raw format
 
 **Returns**  
-The `txid` of the transaction.
+* `txid` – (*string*) The hash of the transaction
 
 ### `GET` /v1/bitcoin/utxo  
 Scans the bitcoin blockchain for unspent transaction outputs for the given public key or address.
