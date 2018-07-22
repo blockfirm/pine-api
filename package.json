@@ -19,7 +19,8 @@
     "url": "https://github.com/blockfirm/payla-api.git"
   },
   "dependencies": {
-    "restify": "^7.2.1"
+    "restify": "^7.2.1",
+    "ws": "^6.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
