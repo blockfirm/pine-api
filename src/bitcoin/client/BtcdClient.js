@@ -58,6 +58,30 @@ export default class BtcdClient {
     ]);
   }
 
+  searchRawTransactions(address, page) {
+    const verbose = 1;
+    const pageSize = 100;
+    const skip = (page - 1) * pageSize;
+    const count = pageSize;
+    const vinextra = 1;
+
+    return this.call('searchrawtransactions', [
+      address,
+      verbose,
+      skip,
+      count,
+      vinextra
+    ]).catch((error) => {
+      if (error.code === -5) {
+        // No information available about address.
+        // Suppress error and return an empty array.
+        return [];
+      }
+
+      throw error;
+    });
+  }
+
   _onOpen() {
     console.log('Connected to btcd.');
   }

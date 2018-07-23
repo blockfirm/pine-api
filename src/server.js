@@ -8,6 +8,8 @@ server.use(restify.plugins.bodyParser({
   mapParams: true
 }));
 
+server.use(restify.plugins.queryParser());
+
 setupRoutes(server);
 
 server.listen(config.api.port, () => {

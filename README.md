@@ -32,13 +32,14 @@ $ npm start
 ## API
 
 ### `GET` /v1/bitcoin/transactions  
-Scans the bitcoin blockchain for transactions matching a public key.
+Scans the bitcoin blockchain for transactions matching a set of addresses.
 
 **Parameters**  
-* `public_key` – A DER hex encoded public key
+* `addresses` – (*string*) Comma-separated list of addresses to get transactions for. Maximum 20 addresses are allowed per request
+* `page` – (*integer*) Each *page* returns maximum 100 transactions per address
 
 **Returns**  
-Returns the transactions together with extra vin data and other useful information about each transaction, e.g. wether it is pending or not.
+Returns the transactions together with extra vin data and other useful information about each transaction, e.g. whether it is pending or not. See <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#searchrawtransactions> for an example return.
 
 ### `POST` /v1/bitcoin/transactions  
 Broadcasts a transaction to the Bitcoin network. The transaction must be serialized in raw format
