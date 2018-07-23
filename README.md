@@ -55,16 +55,6 @@ Broadcasts a transaction to the Bitcoin network. The transaction must be seriali
 **Returns**  
 * `txid` – (*string*) The hash of the transaction
 
-### `GET` /v1/bitcoin/utxo  
-Scans the bitcoin blockchain for unspent transaction outputs for the given public key or address.
-
-**Parameters**  
-* `public_key` – A DER hex encoded public key
-* `address` – A bitcoin address
-
-**Returns**  
-Returns the unspent outputs as a JSON array.
-
 ### `GET` /v1/bitcoin/fee/estimate  
 Estimates the transaction fee based on the fees in the recent blocks.
 
