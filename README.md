@@ -56,7 +56,7 @@ Broadcasts a transaction to the Bitcoin network. The transaction must be seriali
 * `txid` – (*string*) The hash of the transaction
 
 ### `GET` /v1/bitcoin/fee/estimate  
-Estimates the transaction fee based on the fees in the recent blocks.
+Estimates the transaction fee based on the fees in the recent blocks. **Not yet implemented.**
 
 **Returns**  
 Returns the estimated fee per byte in satoshis, e.g.
@@ -68,7 +68,7 @@ Returns the estimated fee per byte in satoshis, e.g.
 ```
 
 ### `GET` /v1/bitcoin/fiatrates  
-Gets the exchange rates for bitcoin in different fiat currencies.
+Gets the exchange rates for bitcoin in different fiat currencies. **Not yet implemented.**
 
 **Parameters**  
 * `currencies` – Comma-separated list of ISO 4217 codes
@@ -77,10 +77,11 @@ Gets the exchange rates for bitcoin in different fiat currencies.
 Array of fiat exchange rates for the currencies specified.
 
 ### `POST` /v1/bitcoin/pushnotifications  
-An endpoint to somehow subscribe to push notifications when new payments are received or confirmed. TBD.
+An endpoint for subscribing to push notifications when new payments are received or confirmed.
+**Not yet implemented.**
 
 ### `DELETE` /v1/bitcoin/pushnotifications  
-An endpoint to unsubscribe to push notifications. TBD.
+An endpoint for unsubscribing to push notifications. **Not yet implemented.**
 
 ### Error handling
 
