@@ -1,6 +1,10 @@
 Payla API
 =========
 
+[![GitHub Release](https://img.shields.io/github/release/blockfirm/payla-api.svg?style=flat-square)](https://github.com/blockfirm/payla-api/releases)
+[![Build Status](https://img.shields.io/travis/blockfirm/payla-api.svg?branch=master&style=flat-square)](https://travis-ci.org/blockfirm/payla-api)
+[![Coverage Status](https://img.shields.io/coveralls/blockfirm/payla-api.svg?style=flat-square)](https://coveralls.io/r/blockfirm/payla-api)
+
 REST API for the [Payla app](https://github.com/blockfirm/payla-app) to interact with different blockchains.
 
 ## Getting started
