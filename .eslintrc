@@ -35,7 +35,7 @@
     "computed-property-spacing": ["error", "never"],
     "eol-last": ["error", "always"],
     "func-call-spacing": ["error", "never"],
-    "func-style": ["error", "declaration"],
+    "func-style": ["error", "expression"],
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "jsx-quotes": ["error", "prefer-single"],
     "key-spacing": ["error", { "mode": "strict", "beforeColon": false, "afterColon": true }],

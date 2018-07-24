@@ -1,6 +1,6 @@
 import { HttpBadRequest, HttpInternalServerError } from '../../errors';
 
-function mapResults(results) {
+const mapResults = (results) => {
   const addressMap = {};
 
   results.forEach((result) => {
@@ -8,9 +8,9 @@ function mapResults(results) {
   });
 
   return addressMap;
-}
+};
 
-export function get(request, response) {
+export const get = function (request, response) {
   const params = request.query;
 
   return Promise.resolve().then(() => {
@@ -56,9 +56,9 @@ export function get(request, response) {
         throw new HttpInternalServerError(error.message);
       });
   });
-}
+};
 
-export function post(request, response) {
+export const post = function (request, response) {
   const transaction = request.params.transaction;
 
   return Promise.resolve().then(() => {
@@ -76,4 +76,4 @@ export function post(request, response) {
         throw new HttpInternalServerError(error.message);
       });
   });
-}
+};

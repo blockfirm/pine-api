@@ -1,9 +1,11 @@
 import { BtcdClient } from './client';
 
-export default function createContext(config) {
+const createContext = (config) => {
   const context = {
     client: new BtcdClient(config.bitcoin.btcd)
   };
 
   return context;
-}
+};
+
+export default createContext;
