@@ -1,4 +1,4 @@
-import { HttpBadRequest, HttpInternalServerError } from '../../errors';
+import { HttpBadRequest, HttpInternalServerError } from '../../../errors';
 
 const mapResults = (results) => {
   const addressMap = {};
@@ -10,7 +10,7 @@ const mapResults = (results) => {
   return addressMap;
 };
 
-export const get = function (request, response) {
+const get = function get(request, response) {
   const params = request.query;
 
   return Promise.resolve().then(() => {
@@ -58,22 +58,4 @@ export const get = function (request, response) {
   });
 };
 
-export const post = function (request, response) {
-  const transaction = request.params.transaction;
-
-  return Promise.resolve().then(() => {
-    if (!transaction || typeof transaction !== 'string') {
-      throw new HttpBadRequest(
-        'Transaction must be a transaction serialized in raw format (https://bitcoin.org/en/developer-reference#raw-transaction-format)'
-      );
-    }
-
-    return this.client.sendRawTransaction(transaction)
-      .then((txid) => {
-        response.send({ txid });
-      })
-      .catch((error) => {
-        throw new HttpInternalServerError(error.message);
-      });
-  });
-};
+export default get;
