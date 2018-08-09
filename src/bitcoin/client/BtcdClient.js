@@ -65,21 +65,39 @@ export default class BtcdClient {
     const count = pageSize;
     const vinextra = 1;
 
-    return this.call('searchrawtransactions', [
+    const params = [
       address,
       verbose,
       skip,
       count,
       vinextra
-    ]).catch((error) => {
-      if (error.code === -5) {
-        // No information available about address.
-        // Suppress error and return an empty array.
-        return [];
-      }
+    ];
 
-      throw error;
-    });
+    return this.call('searchrawtransactions', params)
+      .then((transactions) => {
+        /**
+         * The searchrawtransactions API doesn't return a time for
+         * unconfirmed transactions. Ideally, it would be the time
+         * at which it was received by the node. This workaound
+         * sets it to the current time instead.
+         */
+        transactions.forEach((transaction) => {
+          transaction.time = transaction.time || (new Date().getTime() / 1000);
+        });
+
+        return transactions;
+      })
+      .catch((error) => {
+        if (error.code === -5) {
+          /**
+           * No information available about address.
+           * Suppress error and return an empty array.
+           */
+          return [];
+        }
+
+        throw error;
+      });
   }
 
   _onOpen() {
