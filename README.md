@@ -41,6 +41,7 @@ Scans the bitcoin blockchain for transactions matching a set of addresses.
 **Parameters**  
 * `addresses` – (*string*) Comma-separated list of addresses to get transactions for. Maximum 20 addresses are allowed per request
 * `page` – (*integer*) Each *page* returns maximum 100 transactions per address
+* `reverse` – (*boolean*) `1` specifies that the transactions should be returned in reverse chronological order. Defaults to `0` (false)
 
 **Returns**  
 Returns the transactions together with extra vin data and other useful information about each transaction, e.g. whether it is pending or not. See <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#searchrawtransactions> for an example return.

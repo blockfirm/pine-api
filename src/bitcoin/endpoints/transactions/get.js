@@ -22,6 +22,7 @@ const get = function get(request, response) {
 
     const addresses = params.addresses.split(',');
     const page = parseInt(params.page) || 1;
+    const reverse = params.reverse === '1';
 
     if (page < 1 || page > 1000) {
       throw new HttpBadRequest(
@@ -42,7 +43,7 @@ const get = function get(request, response) {
     }
 
     const promises = addresses.map((address) => {
-      return this.client.searchRawTransactions(address, page).then((transactions) => {
+      return this.client.searchRawTransactions(address, page, reverse).then((transactions) => {
         return { address, transactions };
       });
     });

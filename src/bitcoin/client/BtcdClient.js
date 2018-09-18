@@ -58,7 +58,7 @@ export default class BtcdClient {
     ]);
   }
 
-  searchRawTransactions(address, page) {
+  searchRawTransactions(address, page, reverse = false) {
     const verbose = 1;
     const pageSize = 100;
     const skip = (page - 1) * pageSize;
@@ -70,7 +70,8 @@ export default class BtcdClient {
       verbose,
       skip,
       count,
-      vinextra
+      vinextra,
+      reverse
     ];
 
     return this.call('searchrawtransactions', params)
