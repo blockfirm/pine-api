@@ -40,7 +40,8 @@ Scans the bitcoin blockchain for transactions matching a set of addresses.
 
 **Parameters**  
 * `addresses` – (*string*) Comma-separated list of addresses to get transactions for. Maximum 20 addresses are allowed per request
-* `page` – (*integer*) Each *page* returns maximum 100 transactions per address
+* `page` – (*integer*) What page to get transactions for. The number of transactions depends on the `page_size` parameter
+* `page_size` – (*integer*) Number of transactions to return per address for each page. Must be between 1 and 100 (defaults to 100)
 * `reverse` – (*boolean*) `1` specifies that the transactions should be returned in reverse chronological order. Defaults to `0` (false)
 
 **Returns**  

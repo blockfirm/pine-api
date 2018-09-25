@@ -58,9 +58,9 @@ export default class BtcdClient {
     ]);
   }
 
-  searchRawTransactions(address, page, reverse = false) {
+  // eslint-disable-next-line max-params
+  searchRawTransactions(address, page, pageSize = 100, reverse = false) {
     const verbose = 1;
-    const pageSize = 100;
     const skip = (page - 1) * pageSize;
     const count = pageSize;
     const vinextra = 1;
