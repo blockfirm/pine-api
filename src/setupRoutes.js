@@ -13,7 +13,18 @@ const createRoutesForEndpoints = (server, namespace, endpoints, context) => {
 
     Object.keys(handlers).forEach((method) => {
       const handler = handlers[method];
-      server[method](getFullPath(namespace, path), wrapEndpoint(handler, context));
+      let serverMethod = method;
+      let serverPath = path;
+
+      if (method === 'getById') {
+        serverMethod = 'get';
+        serverPath = `${path}/:id`;
+      }
+
+      server[serverMethod](
+        getFullPath(namespace, serverPath),
+        wrapEndpoint(handler, context)
+      );
     });
   });
 };

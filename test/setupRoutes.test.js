@@ -35,6 +35,13 @@ describe('setupRoutes.js', () => {
       assert(fakeServer.get.calledWithMatch('/v1/bitcoin/transactions'));
     });
 
+    it('registers the route GET /v1/bitcoin/transactions/:id', () => {
+      setupRoutes(fakeServer);
+
+      assert(fakeServer.get.called);
+      assert(fakeServer.get.calledWithMatch('/v1/bitcoin/transactions/:id'));
+    });
+
     it('registers the route POST /v1/bitcoin/transactions', () => {
       setupRoutes(fakeServer);
 
@@ -44,7 +51,7 @@ describe('setupRoutes.js', () => {
 
     it('wraps each endpoint with wrapEndpoint()', () => {
       setupRoutes(fakeServer);
-      assert.equal(wrapEndpointSpy.callCount, 2);
+      assert.equal(wrapEndpointSpy.callCount, 3);
     });
   });
 });

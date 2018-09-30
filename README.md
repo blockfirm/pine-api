@@ -57,6 +57,15 @@ Broadcasts a transaction to the Bitcoin network. The transaction must be seriali
 **Returns**  
 * `txid` – (*string*) The hash of the transaction
 
+### `GET` /v1/bitcoin/transactions/:txid  
+Returns a specific transaction.
+
+**Parameters**  
+* `txid` – (*string*) Transaction hash for the transaction to get
+
+**Returns**  
+Returns the transaction together with extra vin data and other useful information, e.g. whether it is pending or not. See <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#getrawtransaction> for an example return.
+
 ### `GET` /v1/bitcoin/fee/estimate  
 Estimates the transaction fee based on the fees in the recent blocks. **Not yet implemented.**
 

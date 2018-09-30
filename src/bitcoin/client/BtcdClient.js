@@ -58,6 +58,15 @@ export default class BtcdClient {
     ]);
   }
 
+  getRawTransaction(txid) {
+    const verbose = 1;
+
+    return this.call('getrawtransaction', [
+      txid,
+      verbose
+    ]);
+  }
+
   // eslint-disable-next-line max-params
   searchRawTransactions(address, page, pageSize = 100, reverse = false) {
     const verbose = 1;
