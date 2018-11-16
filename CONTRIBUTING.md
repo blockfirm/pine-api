@@ -1,7 +1,7 @@
-Contributing to Payla
-=====================
+Contributing to Pine
+====================
 
-We're glad that you'd like to help us make Payla even better. But first,
+We're glad that you'd like to help us make Pine even better. But first,
 read these guidelines and instructions.
 
 ## Setting up the environment
@@ -23,8 +23,8 @@ Start the btcd node with transaction and address indexing turned on:
 
 ### Clone the repository
 
-	$ git clone https://github.com/blockfirm/payla-api.git
-	$ cd payla-api
+	$ git clone https://github.com/blockfirm/pine-api.git
+	$ cd pine-api
 
 ### Install dependencies
 
@@ -94,7 +94,7 @@ releasing new versions.
 
 ## Roadmap
 
-We're using [Issues](https://github.com/blockfirm/payla-api/issues) on
+We're using [Issues](https://github.com/blockfirm/pine-api/issues) on
 GitHub to plan our milestones. That include new features as well as bug fixes.
 
 ## Reporting security issues
@@ -103,7 +103,7 @@ We appreciate all security related reports. Please send them to <timothy@blockfi
 
 ## Reporting bugs
 
-To report a bug or another issue, please [submit a new issue](https://github.com/blockfirm/payla-api/issues/new) on GitHub.
+To report a bug or another issue, please [submit a new issue](https://github.com/blockfirm/pine-api/issues/new) on GitHub.
 
 Describe your issue with steps of how to reproduce it, and if not obvious, what
 the expected behavior should be. Also include information about your system
@@ -111,5 +111,5 @@ the expected behavior should be. Also include information about your system
 
 ## Discussion and feedback
 
-Use the [Telegram group](https://t.me/paylaapp) or [GitHub Issues](https://github.com/blockfirm/payla-api/issues) for general discussions.
-Tag your issue as a `Question`. You can also tweet us at [@paylaapp](https://twitter.com/paylaapp).
+Use the [Telegram group](https://t.me/pinewallet) or [GitHub Issues](https://github.com/blockfirm/pine-api/issues) for general discussions.
+Tag your issue as a `Question`. You can also tweet us at [@pinewalletco](https://twitter.com/pinewalletco).

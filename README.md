@@ -1,11 +1,11 @@
-Payla API
-=========
+Pine API
+========
 
-[![GitHub Release](https://img.shields.io/github/release/blockfirm/payla-api.svg?style=flat-square)](https://github.com/blockfirm/payla-api/releases)
-[![Build Status](https://img.shields.io/travis/blockfirm/payla-api.svg?branch=master&style=flat-square)](https://travis-ci.org/blockfirm/payla-api)
-[![Coverage Status](https://img.shields.io/coveralls/blockfirm/payla-api.svg?style=flat-square)](https://coveralls.io/r/blockfirm/payla-api)
+[![GitHub Release](https://img.shields.io/github/release/blockfirm/pine-api.svg?style=flat-square)](https://github.com/blockfirm/pine-api/releases)
+[![Build Status](https://img.shields.io/travis/blockfirm/pine-api.svg?branch=master&style=flat-square)](https://travis-ci.org/blockfirm/pine-api)
+[![Coverage Status](https://img.shields.io/coveralls/blockfirm/pine-api.svg?style=flat-square)](https://coveralls.io/r/blockfirm/pine-api)
 
-REST API for the [Payla app](https://github.com/blockfirm/payla-app) to interact with the bitcoin blockchain and network.
+REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockchain and network.
 
 ## Getting started
 
@@ -16,8 +16,8 @@ $ btcd --txindex --addrindex
 ```
 3. Clone this repo:  
 ```
-$ git clone https://github.com/blockfirm/payla-api.git
-$ cd payla-api
+$ git clone https://github.com/blockfirm/pine-api.git
+$ cd pine-api
 ```
 4. Install dependencies:  
 ```
@@ -119,18 +119,18 @@ than running a mainnet node.
     Open `src/config.js` and set `network` to `testnet` instead
     of `mainnet`.
 
-3. **Configure the Payla app to use testnet**
+3. **Configure the Pine app to use testnet**
 
     You need to configure the app to use testnet and point it to your testnet API.
     This requires you to build and run the app yourself.
-    Follow the instructions in the [Payla app repo](https://github.com/blockfirm/payla-app).
+    Follow the instructions in the [Pine app repo](https://github.com/blockfirm/pine-app).
 
 ## Contributing
 
-Want to help us making Payla better? Great, but first read the
+Want to help us making Pine better? Great, but first read the
 [CONTRIBUTING.md](CONTRIBUTING.md) file for instructions.
 
 ## Licensing
 
-Payla is licensed under the Apache License, Version 2.0.
+Pine is licensed under the Apache License, Version 2.0.
 See [LICENSE](LICENSE) for full license text.
