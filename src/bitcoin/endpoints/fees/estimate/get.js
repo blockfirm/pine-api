@@ -22,7 +22,7 @@ const get = function get(request, response) {
     return this.client.estimateFee(parseInt(numberOfBlocks))
       .then((btcPerKilobyte) => {
         const btcPerByte = btcPerKilobyte / 1000;
-        const satoshisPerByte = Math.round(btcPerByte * 100000000);
+        const satoshisPerByte = btcPerByte * 100000000;
 
         response.send({ satoshisPerByte });
       })
