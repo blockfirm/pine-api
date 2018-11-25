@@ -122,6 +122,12 @@ export default class BtcdClient {
       });
   }
 
+  estimateFee(numberOfBlocks) {
+    return this.call('estimatefee', [
+      numberOfBlocks || 1
+    ]);
+  }
+
   _onOpen() {
     console.log('Connected to btcd.');
   }

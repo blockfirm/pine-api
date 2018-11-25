@@ -66,8 +66,11 @@ Returns a specific transaction.
 **Returns**  
 Returns the transaction together with extra vin data and other useful information, e.g. whether it is pending or not. See <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#getrawtransaction> for an example return.
 
-### `GET` /v1/bitcoin/fee/estimate  
-Estimates the transaction fee based on the fees in the recent blocks. **Not yet implemented.**
+### `GET` /v1/bitcoin/fees/estimate  
+Estimates the transaction fee to be confirmed in the next number of blocks specified by `numberOfBlocks`.
+
+**Parameters**  
+* `numberOfBlocks` – (*number*) Number of blocks the transaction can wait until being confirmed. Defaults to 1.
 
 **Returns**  
 Returns the estimated fee per byte in satoshis, e.g.
