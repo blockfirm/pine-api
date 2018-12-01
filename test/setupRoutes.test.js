@@ -28,6 +28,13 @@ describe('setupRoutes.js', () => {
       };
     });
 
+    it('registers the route GET /v1/info', () => {
+      setupRoutes(fakeServer);
+
+      assert(fakeServer.get.called);
+      assert(fakeServer.get.calledWithMatch('/v1/info'));
+    });
+
     it('registers the route GET /v1/bitcoin/fees/estimate', () => {
       setupRoutes(fakeServer);
 
@@ -58,7 +65,7 @@ describe('setupRoutes.js', () => {
 
     it('wraps each endpoint with wrapEndpoint()', () => {
       setupRoutes(fakeServer);
-      assert.equal(wrapEndpointSpy.callCount, 4);
+      assert.equal(wrapEndpointSpy.callCount, 5);
     });
   });
 });

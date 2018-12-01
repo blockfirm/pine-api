@@ -52,6 +52,10 @@ export default class BtcdClient {
     });
   }
 
+  getInfo() {
+    return this.call('getinfo');
+  }
+
   sendRawTransaction(transaction) {
     return this.call('sendrawtransaction', [
       transaction

@@ -37,6 +37,7 @@ $ npm start
 
 ### Methods
 
+* [**GET** /v1/info](#get-v1info)
 * [**GET** /v1/bitcoin/transactions](#get-v1bitcointransactions)
 * [**POST** /v1/bitcoin/transactions](#post-v1bitcointransactions)
 * [**GET** /v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid)
@@ -44,6 +45,20 @@ $ npm start
 * ([**GET** /v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates))
 * ([**POST** /v1/bitcoin/pushnotifications](#post-v1bitcoinpushnotifications))
 * ([**DELETE** /v1/bitcoin/pushnotifications](#delete-v1bitcoinpushnotifications))
+
+### `GET` /v1/info
+
+Returns information about the server.
+
+#### Returns
+
+```
+{
+  "isConnected": true, (boolean) Whether or not the server is connected to a bitcoin node
+  "network": "testnet", (string) "mainnet" or "testnet"
+  "blocks": n (integer) The number of blocks processed
+}
+```
 
 ### `GET` /v1/bitcoin/transactions
 
