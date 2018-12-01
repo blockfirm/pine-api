@@ -35,67 +35,214 @@ $ npm start
 
 ## API
 
-### `GET` /v1/bitcoin/transactions  
+### Methods
+
+* [**GET** /v1/bitcoin/transactions](#get-v1bitcointransactions)
+* [**POST** /v1/bitcoin/transactions](#post-v1bitcointransactions)
+* [**GET** /v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid)
+* [**GET** /v1/bitcoin/fees/estimate](#get-v1bitcoinfeesestimate)
+* ([**GET** /v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates))
+* ([**POST** /v1/bitcoin/pushnotifications](#post-v1bitcoinpushnotifications))
+* ([**DELETE** /v1/bitcoin/pushnotifications](#delete-v1bitcoinpushnotifications))
+
+### `GET` /v1/bitcoin/transactions
+
 Scans the bitcoin blockchain for transactions matching a set of addresses.
 
-**Parameters**  
-* `addresses` – (*string*) Comma-separated list of addresses to get transactions for. Maximum 20 addresses are allowed per request
-* `page` – (*integer*) What page to get transactions for. The number of transactions depends on the `page_size` parameter
-* `page_size` – (*integer*) Number of transactions to return per address for each page. Must be between 1 and 100 (defaults to 100)
-* `reverse` – (*boolean*) `1` specifies that the transactions should be returned in reverse chronological order. Defaults to `0` (false)
+#### Query String Parameters
 
-**Returns**  
-Returns the transactions together with extra vin data and other useful information about each transaction, e.g. whether it is pending or not. See <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#searchrawtransactions> for an example return.
+| Name | Type | Description |
+| --- | --- | --- |
+| addresses | *string* | Comma-separated list of addresses to get transactions for. Maximum 20 addresses are allowed per request. |
+| page | *integer* | What page to get transactions for. The number of transactions depends on the `page_size` parameter. |
+| page_size | *integer* | Number of transactions to return per address for each page. Must be between 1 and 100 (defaults to 100). |
+| reverse | *boolean* | `1` specifies that the transactions should be returned in reverse chronological order. Defaults to `0` (false). |
 
-### `POST` /v1/bitcoin/transactions  
+#### Returns
+
+Returns the transactions together with extra vin data and other useful information about each transaction, e.g. whether it is pending or not. Here's an example return copied from <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#searchrawtransactions>:
+
+```
+[
+    {
+        "hex": "data", (string) hex-encoded transaction
+        "txid": "hash", (string) the hash of the transaction
+        "version": n, (numeric) the transaction version
+        "locktime": n, (numeric) the transaction lock time
+        "vin": [ the transaction inputs as json objects
+        For coinbase transactions:
+            {
+                "coinbase": "data", (string) the hex-encoded bytes of the signature script
+                "txinwitness": “data", (string) the witness stack for the input
+                "sequence": n, (numeric) the script sequence number
+            }
+        For non-coinbase transactions:
+            {
+                "txid": "hash", (string) the hash of the origin transaction
+                "vout": n, (numeric) the index of the output being redeemed from the origin transaction
+                "scriptSig": { the signature script used to redeem the origin transaction
+                    "asm": "asm", (string) disassembly of the script
+                    "hex": "data", (string) hex-encoded bytes of the script
+                }
+                "prevOut": { data from the origin transaction output with index vout
+                    "addresses": ["value",...], (array of string) previous output addresses
+                    "value": n.nnn, (numeric) previous output value
+                }
+                "txinwitness": “data", (string) the witness stack for the input
+                "sequence": n, (numeric) the script sequence number
+            }, ...
+        ],
+        "vout": [ the transaction outputs as json objects
+            {
+                "value": n, (numeric) the value in BTC
+                "n": n, (numeric) the index of this transaction output
+                "scriptPubKey": { the public key script used to pay coins
+                    "asm": "asm", (string) disassembly of the script
+                    "hex": "data", (string) hex-encoded bytes of the script
+                    "reqSigs": n, (numeric) the number of required signatures
+                    "type": "scripttype" (string) the type of the script (e.g. 'pubkeyhash')
+                    "addresses": [ the bitcoin addresses associated with this output
+                        "address", (string) the bitcoin address
+                        ...
+                    ]
+                }
+            }, ...
+        ],
+        "blockhash": "hash" hash of the block the transaction is part of
+        "confirmations": n, number of numeric confirmations of block
+        "time": t, transaction time in seconds since the epoch
+        "blocktime": t, block time in seconds since the epoch
+    }, ...
+]
+```
+
+### `POST` /v1/bitcoin/transactions
+
 Broadcasts a transaction to the Bitcoin network. The transaction must be serialized in raw format
 (https://bitcoin.org/en/developer-reference#raw-transaction-format).
 
-**Parameters**  
-* `transaction` – (*string*) Serialized and signed transaction in raw format
+#### Body
 
-**Returns**  
-* `txid` – (*string*) The hash of the transaction
+Encoded as JSON.
 
-### `GET` /v1/bitcoin/transactions/:txid  
-Returns a specific transaction.
+| Name | Type | Description |
+| --- | --- | --- |
+| transaction | *string* | Serialized and signed transaction in raw format. |
 
-**Parameters**  
-* `txid` – (*string*) Transaction hash for the transaction to get
+#### Returns
 
-**Returns**  
-Returns the transaction together with extra vin data and other useful information, e.g. whether it is pending or not. See <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#getrawtransaction> for an example return.
-
-### `GET` /v1/bitcoin/fees/estimate  
-Estimates the transaction fee to be confirmed in the next number of blocks specified by `numberOfBlocks`.
-
-**Parameters**  
-* `numberOfBlocks` – (*number*) Number of blocks the transaction can wait until being confirmed. Defaults to 1.
-
-**Returns**  
-Returns the estimated fee per byte in satoshis, e.g.
-
-```json
+```
 {
-    "satoshisPerByte": 4
+  "txid": "data" (string) The hash of the transaction
 }
 ```
 
-### `GET` /v1/bitcoin/fiatrates  
-Gets the exchange rates for bitcoin in different fiat currencies. **Not yet implemented.**
+### `GET` /v1/bitcoin/transactions/:txid
 
-**Parameters**  
-* `currencies` – Comma-separated list of ISO 4217 codes
+Returns a specific transaction based on its id.
 
-**Returns**  
-Array of fiat exchange rates for the currencies specified.
+#### Parameters
 
-### `POST` /v1/bitcoin/pushnotifications  
-An endpoint for subscribing to push notifications when new payments are received or confirmed.
+| Name | Type | Description |
+| --- | --- | --- |
+| txid | *string* | Transaction hash for the transaction to get. |
+
+#### Returns
+
+Returns the transaction together with extra vin data and other useful information, e.g. whether it is pending or not. Here's an example return copied from <https://github.com/btcsuite/btcd/blob/master/docs/json_rpc_api.md#getrawtransaction>:
+
+```
+{
+    "hex": "data", (string) hex-encoded transaction
+    "txid": "hash", (string) the hash of the transaction
+    "version": n, (numeric) the transaction version
+    "locktime": n, (numeric) the transaction lock time
+    "vin": [ the transaction inputs as json objects
+    For coinbase transactions:
+        {
+            "coinbase": "data", (string) the hex-encoded bytes of the signature script
+            "txinwitness": “data", (string) the witness stack for the input
+            "sequence": n, (numeric) the script sequence number
+        }
+    For non-coinbase transactions:
+        {
+            "txid": "hash", (string) the hash of the origin transaction
+            "vout": n, (numeric) the index of the output being redeemed from the origin transaction
+            "scriptSig": { the signature script used to redeem the origin transaction
+                "asm": "asm", (string) disassembly of the script
+                "hex": "data", (string) hex-encoded bytes of the script
+            }
+            "prevOut": { data from the origin transaction output with index vout
+                "addresses": ["value",...], (array of string) previous output addresses
+                "value": n.nnn, (numeric) previous output value
+            }
+            "txinwitness": “data", (string) the witness stack for the input
+            "sequence": n, (numeric) the script sequence number
+        }, ...
+    ],
+    "vout": [ the transaction outputs as json objects
+        {
+            "value": n, (numeric) the value in BTC
+            "n": n, (numeric) the index of this transaction output
+            "scriptPubKey": { the public key script used to pay coins
+                "asm": "asm", (string) disassembly of the script
+                "hex": "data", (string) hex-encoded bytes of the script
+                "reqSigs": n, (numeric) the number of required signatures
+                "type": "scripttype" (string) the type of the script (e.g. 'pubkeyhash')
+                "addresses": [ the bitcoin addresses associated with this output
+                    "address", (string) the bitcoin address
+                    ...
+                ]
+            }
+        }, ...
+    ],
+    "blockhash": "hash" hash of the block the transaction is part of
+    "confirmations": n, number of numeric confirmations of block
+    "time": t, transaction time in seconds since the epoch
+    "blocktime": t, block time in seconds since the epoch
+}
+```
+
+### `GET` /v1/bitcoin/fees/estimate
+
+Estimates the transaction fee to be confirmed in the next number of blocks specified by `numberOfBlocks`.
+
+#### Query String Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| numberOfBlocks | *integer* | Number of blocks the transaction can wait until being confirmed. Defaults to 1. |
+
+#### Returns
+
+```
+{
+  "satoshisPerByte": 4.7 (number) The estimated fee per byte in satoshis
+}
+```
+
+### `GET` /v1/bitcoin/fiatrates
+
 **Not yet implemented.**
+Gets the current exchange rates for bitcoin in different fiat currencies.
 
-### `DELETE` /v1/bitcoin/pushnotifications  
-An endpoint for unsubscribing to push notifications. **Not yet implemented.**
+#### Query String Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| currencies | *string* | Comma-separated list of ISO 4217 codes. |
+
+#### Returns
+
+Array of fiat exchange rates for the specified currencies.
+
+### `POST` /v1/bitcoin/pushnotifications
+
+**Not yet implemented.** An endpoint for subscribing to push notifications when new payments are received or confirmed.
+
+### `DELETE` /v1/bitcoin/pushnotifications
+
+**Not yet implemented.** An endpoint for unsubscribing to push notifications.
 
 ### Error handling
 
