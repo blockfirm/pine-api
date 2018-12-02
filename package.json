@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "dev": "node src/index.dev.js",
     "build": "./node_modules/.bin/babel ./src --experimental --source-maps-inline -d ./build",
-    "test": "node_modules/.bin/nyc node_modules/.bin/_mocha --compilers js:babel-register -- recursive",
+    "test": "node_modules/.bin/nyc node_modules/.bin/_mocha --compilers js:babel-register -- \"./test/**/*.test.js*\"",
     "lint": "./node_modules/.bin/eslint --ext .js src/ test/",
     "coveralls": "node_modules/.bin/nyc report --reporter=text-lcov | node_modules/.bin/coveralls"
   },
@@ -30,7 +30,7 @@
     "babel-register": "^6.26.0",
     "coveralls": "^3.0.2",
     "eslint": "^4.7.1",
-    "mocha": "^3.5.3",
+    "mocha": "^5.2.0",
     "nyc": "^11.3.0",
     "proxyquire": "^1.8.0",
     "sinon": "^4.0.0"
