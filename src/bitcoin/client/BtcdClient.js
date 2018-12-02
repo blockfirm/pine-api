@@ -1,11 +1,20 @@
+/* eslint-disable max-lines */
 import WebSocket from 'ws';
 
 const JSON_RPC_VERSION = '1.0';
 
 export default class BtcdClient {
   constructor(config) {
+    this.config = config;
+    this._connect();
+  }
+
+  _connect() {
+    const config = this.config;
     const username = config.username;
     const password = config.password;
+
+    this._disconnect();
 
     this.websocket = new WebSocket(config.uri, {
       headers: {
@@ -21,6 +30,19 @@ export default class BtcdClient {
     this.websocket.on('close', this._onClose.bind(this));
     this.websocket.on('error', this._onError.bind(this));
     this.websocket.on('message', this._onMessage.bind(this));
+  }
+
+  _disconnect() {
+    const websocket = this.websocket;
+
+    if (!websocket) {
+      return;
+    }
+
+    websocket.removeAllListeners();
+    websocket.close();
+
+    delete this.websocket;
   }
 
   call(method, params) {
@@ -133,15 +155,25 @@ export default class BtcdClient {
   }
 
   _onOpen() {
-    console.log('Connected to btcd.');
+    console.log('[BTCD] ✅ Connected');
   }
 
-  _onClose() {
-    console.log('Disconnect from btcd.');
+  _onClose(code) {
+    console.log(`[BTCD] ⛔️ Disconnected (${code})`);
+
+    if (code === 1000) {
+      // Normal close.
+      return;
+    }
+
+    // Try to reconnect.
+    setTimeout(() => {
+      this._connect();
+    }, 1000);
   }
 
   _onError(error) {
-    console.error('btcd error: ', error);
+    console.error('[BTCD] 🔥 Error: ', error.message);
   }
 
   _onMessage(message) {
