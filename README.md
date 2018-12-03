@@ -10,31 +10,31 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 ## Getting started
 
 1. Install [btcd](https://github.com/btcsuite/btcd)
-2. Start the btcd node with transaction and address indexing turned on:  
-```
-$ btcd --txindex --addrindex
-```
-3. Clone this repo:  
-```
-$ git clone https://github.com/blockfirm/pine-api.git
-$ cd pine-api
-```
-4. Install dependencies:  
-```
-$ npm install
-```
+2. Start the btcd node with transaction and address indexing turned on:
+    ```
+    $ btcd --txindex --addrindex
+    ```
+3. Clone this repo:
+    ```
+    $ git clone https://github.com/blockfirm/pine-api.git
+    $ cd pine-api
+    ```
+4. Install dependencies:
+    ```
+    $ npm install
+    ```
 5. Configure the API  
-Open `src/config.js` and enter your btcd RPC username and password.
+    Open `src/config.js` and enter your btcd RPC username and password.
 
-6. Start the API server in development mode:  
-```
-$ npm run dev
-```
-7. Or build it and run in production mode:  
-```
-$ npm run build
-$ npm start
-```
+6. Start the API server in development mode:
+    ```
+    $ npm run dev
+    ```
+7. Or build it and run in production mode:
+    ```
+    $ npm run build
+    $ npm start
+    ```
 
 ## API
 
