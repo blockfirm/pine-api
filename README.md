@@ -23,11 +23,14 @@ $ cd pine-api
 ```
 $ npm install
 ```
-5. Start the API server in development mode:  
+5. Configure the API  
+Open `src/config.js` and enter your btcd RPC username and password.
+
+6. Start the API server in development mode:  
 ```
 $ npm run dev
 ```
-6. Or build it and run in production mode:  
+7. Or build it and run in production mode:  
 ```
 $ npm run build
 $ npm start
@@ -35,16 +38,20 @@ $ npm start
 
 ## API
 
-### Methods
+### Endpoints
 
-* [**GET** /v1/info](#get-v1info)
-* [**GET** /v1/bitcoin/transactions](#get-v1bitcointransactions)
-* [**POST** /v1/bitcoin/transactions](#post-v1bitcointransactions)
-* [**GET** /v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid)
-* [**GET** /v1/bitcoin/fees/estimate](#get-v1bitcoinfeesestimate)
-* ([**GET** /v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates))
-* ([**POST** /v1/bitcoin/pushnotifications](#post-v1bitcoinpushnotifications))
-* ([**DELETE** /v1/bitcoin/pushnotifications](#delete-v1bitcoinpushnotifications))
+Endpoints for retrieving and submitting information to the bitcoin blockchain and network.
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | [/v1/info](#get-v1info) | Get information about the server |
+| GET | [/v1/bitcoin/transactions](#get-v1bitcointransactions) | Get transactions by address |
+| POST | [/v1/bitcoin/transactions](#post-v1bitcointransactions) | Broadcast a signed transaction |
+| GET | [/v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid) | Get a specific transaction by its ID |
+| GET | [/v1/bitcoin/fees/estimate](#get-v1bitcoinfeesestimate) | Get the current estimated transaction fee rate |
+| GET | [/v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates) | *Not implemented yet* |
+| POST | [/v1/bitcoin/pushnotifications](#post-v1bitcoinpushnotifications) | *Not implemented yet* |
+| DELETE | [/v1/bitcoin/pushnotifications](#delete-v1bitcoinpushnotifications) | *Not implemented yet* |
 
 ### `GET` /v1/info
 
