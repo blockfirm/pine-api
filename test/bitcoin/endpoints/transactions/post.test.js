@@ -37,7 +37,7 @@ describe('bitcoin/endpoints/transactions/post.js', () => {
       };
 
       fakeContext = {
-        client: fakeClient
+        btcd: fakeClient
       };
     });
 
