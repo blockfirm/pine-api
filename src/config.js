@@ -10,6 +10,10 @@ const config = {
   api: {
     version: 'v1',
     port: 8080
+  },
+  redis: {
+    host: '127.0.0.1',
+    port: 6379
   }
 };
 

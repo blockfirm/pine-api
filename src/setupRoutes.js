@@ -1,4 +1,5 @@
 import config from './config';
+import createGlobalContext from './createGlobalContext';
 import wrapEndpoint from './wrapEndpoint';
 import rootEndpoints from './endpoints';
 import * as bitcoin from './bitcoin';
@@ -31,7 +32,8 @@ const createRoutesForEndpoints = (server, namespace, endpoints, context) => {
 };
 
 const setupRoutes = (server) => {
-  const bitcoinContext = bitcoin.createContext(config);
+  const globalContext = createGlobalContext(config);
+  const bitcoinContext = bitcoin.createContext(config, globalContext);
 
   createRoutesForEndpoints(server, '', rootEndpoints, bitcoinContext);
   createRoutesForEndpoints(server, '/bitcoin', bitcoin.endpoints, bitcoinContext);
