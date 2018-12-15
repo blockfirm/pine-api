@@ -10,7 +10,7 @@ const post = function post(request, response) {
       );
     }
 
-    return this.client.sendRawTransaction(transaction)
+    return this.btcd.sendRawTransaction(transaction)
       .then((txid) => {
         response.send({ txid });
       })

@@ -19,7 +19,7 @@ const get = function get(request, response) {
      * implemented in btcd.
      * <https://github.com/btcsuite/btcd/issues/1146>
      */
-    return this.client.estimateFee(parseInt(numberOfBlocks))
+    return this.btcd.estimateFee(parseInt(numberOfBlocks))
       .then((btcPerKilobyte) => {
         const btcPerByte = btcPerKilobyte / 1000;
         const satoshisPerByte = btcPerByte * 100000000;

@@ -12,7 +12,7 @@ const getById = function get(request, response) {
       );
     }
 
-    return this.client.getRawTransaction(txid)
+    return this.btcd.getRawTransaction(txid)
       .then((transaction) => {
         response.send(transaction);
       })

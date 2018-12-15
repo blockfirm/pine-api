@@ -2,7 +2,7 @@ import { BtcdClient } from './client';
 
 const createContext = (config) => {
   const context = {
-    client: new BtcdClient(config.bitcoin.btcd),
+    btcd: new BtcdClient(config.bitcoin.btcd),
     config
   };
 

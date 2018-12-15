@@ -54,7 +54,7 @@ const get = function get(request, response) {
     validateParams(page, pageSize, addresses);
 
     const promises = addresses.map((address) => {
-      return this.client.searchRawTransactions(address, page, pageSize, reverse).then((transactions) => {
+      return this.btcd.searchRawTransactions(address, page, pageSize, reverse).then((transactions) => {
         return { address, transactions };
       });
     });

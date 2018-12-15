@@ -2,7 +2,7 @@ import { HttpInternalServerError } from '../../errors';
 
 const get = function get(request, response) {
   return Promise.resolve().then(() => {
-    return this.client.getInfo()
+    return this.btcd.getInfo()
       .then((info) => {
         response.send({
           isConnected: true,
