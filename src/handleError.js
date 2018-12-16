@@ -4,7 +4,7 @@ const handleError = (error, response) => {
 
   response.send(status, { error: message });
 
-  console.error(`${status} ${message}`);
+  console.error(`[API] ⛔️ ${status} ${message}`);
 };
 
 export default handleError;
