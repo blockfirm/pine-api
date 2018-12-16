@@ -292,7 +292,13 @@ Returns metadata about the subscriptions for the specified device token.
 
 ### `DELETE` /v1/bitcoin/subscriptions/:deviceToken
 
-**Not yet implemented.** An endpoint for unsubscribing to push notifications.
+An endpoint for unsubscribing from all push notifications for the specified device token.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| deviceToken | *string* | Device token to unsubscribe. |
 
 ### Error handling
 

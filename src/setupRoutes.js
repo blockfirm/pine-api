@@ -21,6 +21,9 @@ const createRoutesForEndpoints = (server, namespace, endpoints, context) => {
       if (method === 'getById') {
         serverMethod = 'get';
         serverPath = `${path}/:id`;
+      } else if (method === 'deleteById') {
+        serverMethod = 'del';
+        serverPath = `${path}/:id`;
       }
 
       server[serverMethod](

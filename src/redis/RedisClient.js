@@ -53,9 +53,45 @@ export default class RedisClient {
     });
   }
 
+  del(key) {
+    return new Promise((resolve, reject) => {
+      this.client.del(key, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
+
   sadd(key, values) {
     return new Promise((resolve, reject) => {
       this.client.sadd(key, values, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
+
+  srem(key, value) {
+    return new Promise((resolve, reject) => {
+      this.client.srem(key, value, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
+
+  smembers(key) {
+    return new Promise((resolve, reject) => {
+      this.client.smembers(key, (error, result) => {
         if (error) {
           return reject(error);
         }

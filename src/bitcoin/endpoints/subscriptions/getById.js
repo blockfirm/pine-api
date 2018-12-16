@@ -1,6 +1,6 @@
 import { HttpBadRequest, HttpInternalServerError } from '../../../errors';
 
-const getById = function get(request, response) {
+const getById = function getById(request, response) {
   const params = request.params;
 
   return Promise.resolve().then(() => {

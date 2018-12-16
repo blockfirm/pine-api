@@ -24,7 +24,8 @@ describe('setupRoutes.js', () => {
     beforeEach(() => {
       fakeServer = {
         get: sinon.spy(),
-        post: sinon.spy()
+        post: sinon.spy(),
+        del: sinon.spy()
       };
     });
 
@@ -65,7 +66,7 @@ describe('setupRoutes.js', () => {
 
     it('wraps each endpoint with wrapEndpoint()', () => {
       setupRoutes(fakeServer);
-      assert.equal(wrapEndpointSpy.callCount, 7);
+      assert.equal(wrapEndpointSpy.callCount, 8);
     });
   });
 });
