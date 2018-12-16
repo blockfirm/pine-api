@@ -257,11 +257,21 @@ Gets the current exchange rates for bitcoin in different fiat currencies.
 
 Array of fiat exchange rates for the specified currencies.
 
-### `POST` /v1/bitcoin/pushnotifications
+### `POST` /v1/bitcoin/subscriptions
 
-**Not yet implemented.** An endpoint for subscribing to push notifications when new payments are received or confirmed.
+An endpoint for subscribing to push notifications when new payments are received.
+Currently only supports sending notifications using Apple Push Notification Service.
 
-### `DELETE` /v1/bitcoin/pushnotifications
+#### Body
+
+Encoded as JSON.
+
+| Name | Type | Description |
+| --- | --- | --- |
+| deviceToken | *string* | Device token to use when sending the notifications. |
+| addresses | *array of strings* | Array of bitcoin addresses to subscribe to. Maximum 1000 addresses per request. |
+
+### `DELETE` /v1/bitcoin/subscriptions
 
 **Not yet implemented.** An endpoint for unsubscribing to push notifications.
 

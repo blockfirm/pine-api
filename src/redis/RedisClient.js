@@ -52,4 +52,16 @@ export default class RedisClient {
       });
     });
   }
+
+  sadd(key, values) {
+    return new Promise((resolve, reject) => {
+      this.client.sadd(key, values, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
 }

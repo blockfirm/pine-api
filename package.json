@@ -20,6 +20,7 @@
     "url": "https://github.com/blockfirm/pine-api.git"
   },
   "dependencies": {
+    "bitcoinjs-lib": "^4.0.2",
     "redis": "^2.8.0",
     "restify": "^7.2.1",
     "ws": "^6.0.0"
