@@ -51,7 +51,7 @@ Endpoints for retrieving and submitting information to the bitcoin blockchain an
 | GET | [/v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates) | *Not implemented yet* |
 | POST | [/v1/bitcoin/subscriptions](#post-v1bitcoinsubscriptions) | Subscribe to push notifications for specified addresses |
 | GET | [/v1/bitcoin/subscriptions/:deviceToken](#get-v1bitcoinsubscriptionsdevicetoken) | Get metadata about subscriptions for a device token |
-| DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | *Not implemented yet* |
+| DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | Unsubscribe from all push notifications |
 
 ### `GET` /v1/info
 
