@@ -65,7 +65,7 @@ describe('setupRoutes.js', () => {
 
     it('wraps each endpoint with wrapEndpoint()', () => {
       setupRoutes(fakeServer);
-      assert.equal(wrapEndpointSpy.callCount, 6);
+      assert.equal(wrapEndpointSpy.callCount, 7);
     });
   });
 });

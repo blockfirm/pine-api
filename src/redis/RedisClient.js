@@ -64,4 +64,16 @@ export default class RedisClient {
       });
     });
   }
+
+  scard(key) {
+    return new Promise((resolve, reject) => {
+      this.client.scard(key, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
 }

@@ -49,8 +49,9 @@ Endpoints for retrieving and submitting information to the bitcoin blockchain an
 | GET | [/v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid) | Get a specific transaction by its ID |
 | GET | [/v1/bitcoin/fees/estimate](#get-v1bitcoinfeesestimate) | Get the current estimated transaction fee rate |
 | GET | [/v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates) | *Not implemented yet* |
-| POST | [/v1/bitcoin/pushnotifications](#post-v1bitcoinpushnotifications) | *Not implemented yet* |
-| DELETE | [/v1/bitcoin/pushnotifications](#delete-v1bitcoinpushnotifications) | *Not implemented yet* |
+| POST | [/v1/bitcoin/subscriptions](#post-v1bitcoinsubscriptions) | Subscribe to push notifications for specified addresses |
+| GET | [/v1/bitcoin/subscriptions/:deviceToken](#get-v1bitcoinsubscriptionsdevicetoken) | Get metadata about subscriptions for a device token |
+| DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | *Not implemented yet* |
 
 ### `GET` /v1/info
 
@@ -271,7 +272,25 @@ Encoded as JSON.
 | deviceToken | *string* | Device token to use when sending the notifications. |
 | addresses | *array of strings* | Array of bitcoin addresses to subscribe to. Maximum 1000 addresses per request. |
 
-### `DELETE` /v1/bitcoin/subscriptions
+### `GET` /v1/bitcoin/subscriptions/:deviceToken
+
+Returns metadata about the subscriptions for the specified device token.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| deviceToken | *string* | Device token to get information about. |
+
+#### Returns
+
+```
+{
+  "numberOfSubscriptions": 3 (number) The number of subscriptions this device token has subscribed to
+}
+```
+
+### `DELETE` /v1/bitcoin/subscriptions/:deviceToken
 
 **Not yet implemented.** An endpoint for unsubscribing to push notifications.
 
