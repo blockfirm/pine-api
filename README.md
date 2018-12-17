@@ -7,6 +7,17 @@ Pine API
 
 REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockchain and network.
 
+## Table of Contents
+
+* [Dependencies](#dependencies)
+* [Getting started](#gettingstarted)
+* [API Docs](#api)
+  * [Endpoints](#endpoints)
+  * [Error handling](#errorhandling)
+* [Use with Bitcoin testnet](#usewithbitcointestnet)
+* [Contributing](#contributing)
+* [Licensing](#licensing)
+
 ## Dependencies
 
 * [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
