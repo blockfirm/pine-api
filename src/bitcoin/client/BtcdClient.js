@@ -84,6 +84,12 @@ export default class BtcdClient {
     ]);
   }
 
+  decodeRawTransaction(rawTransaction) {
+    return this.call('decoderawtransaction', [
+      rawTransaction
+    ]);
+  }
+
   getRawTransaction(txid) {
     const verbose = 1;
 
@@ -154,6 +160,16 @@ export default class BtcdClient {
     ]);
   }
 
+  loadTxFilter(reload, addresses, outpoints) {
+    return this.call('loadtxfilter', [
+      reload,
+      addresses,
+      outpoints
+    ]);
+  }
+
+  onRelevantTxAccepted() {}
+
   _onOpen() {
     console.log('[BTCD] ✅ Connected');
   }
@@ -183,6 +199,8 @@ export default class BtcdClient {
     if (callback) {
       callback(data.error, data.result);
       delete this.callbacks[data.id];
+    } else if (data.method === 'relevanttxaccepted') {
+      this.onRelevantTxAccepted(data.params[0]);
     }
   }
 }

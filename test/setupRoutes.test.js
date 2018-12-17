@@ -6,6 +6,7 @@ import * as bitcoin from '../src/bitcoin';
 const wrapEndpointSpy = sinon.spy();
 
 const setupRoutes = proxyquire('../src/setupRoutes', {
+  './createGlobalContext': { default: () => ({}) },
   './wrapEndpoint': { default: wrapEndpointSpy },
   './bitcoin': {
     endpoints: bitcoin.endpoints,

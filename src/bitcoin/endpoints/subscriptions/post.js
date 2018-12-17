@@ -54,6 +54,9 @@ const post = function post(request, response) {
 
     return Promise.all(promises)
       .then(() => {
+        return this.notifications.addAddressesToFilter(addresses);
+      })
+      .then(() => {
         response.send(200);
       })
       .catch((error) => {

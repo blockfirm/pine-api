@@ -112,4 +112,16 @@ export default class RedisClient {
       });
     });
   }
+
+  keys(pattern) {
+    return new Promise((resolve, reject) => {
+      this.client.keys(pattern, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
 }
