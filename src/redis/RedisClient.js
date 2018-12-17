@@ -1,5 +1,7 @@
 import redis from 'redis';
 
+const RECONNECT_INTERVAL = 2000;
+
 export default class RedisClient {
   constructor(config) {
     this.config = config;
@@ -12,7 +14,7 @@ export default class RedisClient {
       this.config.host,
       {
         // eslint-disable-next-line camelcase
-        retry_strategy: () => 2000 // Try to reconnect after 2 seconds.
+        retry_strategy: () => RECONNECT_INTERVAL // Try to reconnect after 2 seconds.
       }
     );
 

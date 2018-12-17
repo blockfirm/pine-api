@@ -2,6 +2,11 @@
 import WebSocket from 'ws';
 
 const JSON_RPC_VERSION = '1.0';
+const RECONNECT_INTERVAL = 1000;
+const DEFAULT_PAGE_SIZE = 100;
+
+const ERROR_CODE_NORMAL_CLOSE = 1000;
+const ERROR_CODE_NO_INFORMATION_AVAILABLE = -5;
 
 export default class BtcdClient {
   constructor(config) {
@@ -112,7 +117,7 @@ export default class BtcdClient {
   }
 
   // eslint-disable-next-line max-params
-  searchRawTransactions(address, page, pageSize = 100, reverse = false) {
+  searchRawTransactions(address, page, pageSize = DEFAULT_PAGE_SIZE, reverse = false) {
     const verbose = 1;
     const skip = (page - 1) * pageSize;
     const count = pageSize;
@@ -142,7 +147,7 @@ export default class BtcdClient {
         return transactions;
       })
       .catch((error) => {
-        if (error.code === -5) {
+        if (error.code === ERROR_CODE_NO_INFORMATION_AVAILABLE) {
           /**
            * No information available about address.
            * Suppress error and return an empty array.
@@ -177,15 +182,14 @@ export default class BtcdClient {
   _onClose(code) {
     console.error(`[BTCD] ⛔️ Disconnected (${code})`);
 
-    if (code === 1000) {
-      // Normal close.
+    if (code === ERROR_CODE_NORMAL_CLOSE) {
       return;
     }
 
     // Try to reconnect.
     setTimeout(() => {
       this._connect();
-    }, 1000);
+    }, RECONNECT_INTERVAL);
   }
 
   _onError(error) {
