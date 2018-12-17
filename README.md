@@ -7,6 +7,13 @@ Pine API
 
 REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockchain and network.
 
+## Dependencies
+
+* [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
+* [btcd](https://github.com/btcsuite/btcd) as a bitcoin node for interacting with the bitcoin network and blockchain
+* [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications
+* [APN](https://developer.apple.com/notifications/) for sending push notifications to iOS devices
+
 ## Getting started
 
 1. Install [btcd](https://github.com/btcsuite/btcd)
