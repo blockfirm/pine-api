@@ -175,7 +175,7 @@ export default class BtcdClient {
   }
 
   _onClose(code) {
-    console.log(`[BTCD] ⛔️ Disconnected (${code})`);
+    console.error(`[BTCD] ⛔️ Disconnected (${code})`);
 
     if (code === 1000) {
       // Normal close.
