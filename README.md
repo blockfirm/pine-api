@@ -10,11 +10,11 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 ## Table of Contents
 
 * [Dependencies](#dependencies)
-* [Getting started](#gettingstarted)
+* [Getting started](#getting-started)
 * [API Docs](#api)
   * [Endpoints](#endpoints)
-  * [Error handling](#errorhandling)
-* [Use with Bitcoin testnet](#usewithbitcointestnet)
+  * [Error handling](#error-handling)
+* [Use with Bitcoin testnet](#use-with-bitcoin-testnet)
 * [Contributing](#contributing)
 * [Licensing](#licensing)
 
