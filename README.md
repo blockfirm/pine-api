@@ -11,6 +11,9 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Dependencies](#dependencies)
 * [Getting started](#getting-started)
+* [Setting up push notifications](#setting-up-push-notifications)
+  * [Send notifications to the official Pine app](#send-notifications-to-the-official-pine-app)
+  * [Send notifications to your own app](#send-notifications-to-your-own-app)
 * [API Docs](#api)
   * [Endpoints](#endpoints)
   * [Error handling](#error-handling)
@@ -22,8 +25,8 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
 * [btcd](https://github.com/btcsuite/btcd) as a bitcoin node for interacting with the bitcoin network and blockchain
-* [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications
-* [APN](https://developer.apple.com/notifications/) for sending push notifications to iOS devices
+* [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications (optional)
+* [APN](https://developer.apple.com/notifications/) for sending push notifications to iOS devices (optional)
 
 ## Getting started
 
@@ -52,6 +55,42 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
     $ npm run build
     $ npm start
     ```
+
+## Setting up push notifications
+
+There are two ways to set up push notifications; set it up with your own app with your own keys, or
+send them to the official Pine app through Pine's official node.
+
+Both methods requires [Redis](https://redis.io) to be installed and running.
+
+### Send notifications to the official Pine app
+
+**Note: This method will only work once Pine is released and has an official node to send notifications
+through.**
+
+This is the only way if you just want to host your own node but still want to use the Pine app from
+the App Store and continue to get push notifications.
+
+1. Open `src/config.js`
+2. Uncomment `notifications.webhook`
+3. Build and restart the server
+
+Your node will now monitor the blockchain and trigger a webhook to Pine's node every time it finds
+a matching transaction. No information other than the device token is sent to Pine's servers.
+
+### Send notifications to your own app
+
+If you are running the app from source you will need to create a new APN key and enter your
+credentials in `config.js` to be able to receive push notifications.
+
+1. [Create a new key](https://developer.apple.com/account/ios/authkey) in your Apple Developer account to be used with the Apple Push Notifications Service
+2. Open `src/config.js`
+3. Enter your key credentials (key path, key ID, and team ID) in `apn.token`
+4. Enter your app's bundle ID in `apn.bundleId`
+5. Build and restart the server
+
+Your node will now monitor the blockchain and send a notification with the Apple Push Notifications Service
+every time it finds a matching transaction.
 
 ## API
 

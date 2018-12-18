@@ -15,6 +15,9 @@ const config = {
     host: '127.0.0.1',
     port: 6379
   },
+  notifications: {
+    //webhook: 'http://localhost:8080/v1/notifications'
+  },
   apn: {
     production: false,
     bundleId: 'se.blockfirm.Pine',

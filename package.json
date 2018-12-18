@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "apn": "^2.2.0",
+    "axios": "^0.18.0",
     "bitcoinjs-lib": "^4.0.2",
     "redis": "^2.8.0",
     "restify": "^7.2.1",

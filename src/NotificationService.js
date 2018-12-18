@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default class NotificationService {
   constructor(config, context) {
     this.config = config;
@@ -44,6 +46,7 @@ export default class NotificationService {
 
   _notify(transaction) {
     const { apn, redis } = this.context;
+    const { webhook } = this.config.notifications;
 
     if (!transaction || !Array.isArray(transaction.vout)) {
       return;
@@ -63,9 +66,22 @@ export default class NotificationService {
         }
 
         deviceTokens.forEach((deviceToken) => {
-          apn.send(this.config.apn.notifications.newPayment, deviceToken);
+          if (webhook) {
+            this._sendWithWebhook(deviceToken);
+          } else {
+            apn.send(this.config.apn.notifications.newPayment, deviceToken);
+          }
         });
       });
     });
+  }
+
+  _sendWithWebhook(deviceToken) {
+    const { webhook } = this.config.notifications;
+
+    axios.post(webhook, { deviceToken })
+      .catch((error) => {
+        console.error('[NOTIFY WEBHOOK] 🔥 Error: ', error.message);
+      });
   }
 }
