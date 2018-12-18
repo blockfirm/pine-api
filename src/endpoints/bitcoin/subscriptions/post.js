@@ -1,5 +1,5 @@
 import { HttpBadRequest, HttpInternalServerError } from '../../../errors';
-import validateAddress from '../../validateAddress';
+import validateAddress from '../../../bitcoin/validateAddress';
 
 const validateParams = (deviceToken, addresses, config) => {
   if (!deviceToken || typeof deviceToken !== 'string') {

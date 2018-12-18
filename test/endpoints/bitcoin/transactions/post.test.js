@@ -2,9 +2,9 @@ import assert from 'assert';
 import sinon from 'sinon';
 
 import { HttpBadRequest, HttpInternalServerError } from '../../../../src/errors';
-import * as transactionsEndpoints from '../../../../src/bitcoin/endpoints/transactions';
+import * as transactionsEndpoints from '../../../../src/endpoints/bitcoin/transactions';
 
-describe('bitcoin/endpoints/transactions/post.js', () => {
+describe('endpoints/bitcoin/transactions/post.js', () => {
   describe('#post(request, response)', () => {
     let fakeTransaction;
     let fakeTxid;

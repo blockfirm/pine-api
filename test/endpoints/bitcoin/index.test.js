@@ -1,7 +1,7 @@
 import assert from 'assert';
-import endpoints from '../../../src/bitcoin/endpoints';
+import endpoints from '../../../src/endpoints/bitcoin';
 
-describe('bitcoin/endpoints/index.js', () => {
+describe('endpoints/bitcoin/index.js', () => {
   it('exports an object', () => {
     assert.equal(typeof endpoints, 'object');
   });

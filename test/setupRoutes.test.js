@@ -1,17 +1,12 @@
 import proxyquire from 'proxyquire';
 import assert from 'assert';
 import sinon from 'sinon';
-import * as bitcoin from '../src/bitcoin';
 
 const wrapEndpointSpy = sinon.spy();
 
 const setupRoutes = proxyquire('../src/setupRoutes', {
-  './createGlobalContext': { default: () => ({}) },
-  './wrapEndpoint': { default: wrapEndpointSpy },
-  './bitcoin': {
-    endpoints: bitcoin.endpoints,
-    createContext: () => ({})
-  }
+  './createContext': { default: () => ({}) },
+  './wrapEndpoint': { default: wrapEndpointSpy }
 }).default;
 
 describe('setupRoutes.js', () => {

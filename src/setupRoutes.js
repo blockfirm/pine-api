@@ -1,8 +1,7 @@
 import config from './config';
-import createGlobalContext from './createGlobalContext';
+import createContext from './createContext';
 import wrapEndpoint from './wrapEndpoint';
 import rootEndpoints from './endpoints';
-import * as bitcoin from './bitcoin';
 
 const getFullPath = (namespace, path) => {
   return `/${config.api.version}${namespace}${path}`;
@@ -12,6 +11,11 @@ const getFullPath = (namespace, path) => {
 const createRoutesForEndpoints = (server, namespace, endpoints, context) => {
   Object.keys(endpoints).forEach((path) => {
     const handlers = endpoints[path];
+
+    if (Object.keys(handlers)[0].indexOf('/') === 0) {
+      // This route contains its own set of endpoints.
+      return createRoutesForEndpoints(server, namespace + path, handlers, context);
+    }
 
     Object.keys(handlers).forEach((method) => {
       const handler = handlers[method];
@@ -35,11 +39,8 @@ const createRoutesForEndpoints = (server, namespace, endpoints, context) => {
 };
 
 const setupRoutes = (server) => {
-  const globalContext = createGlobalContext(config);
-  const bitcoinContext = bitcoin.createContext(config, globalContext);
-
-  createRoutesForEndpoints(server, '', rootEndpoints, bitcoinContext);
-  createRoutesForEndpoints(server, '/bitcoin', bitcoin.endpoints, bitcoinContext);
+  const context = createContext(config);
+  createRoutesForEndpoints(server, '', rootEndpoints, context);
 };
 
 export default setupRoutes;
