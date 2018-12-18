@@ -9,10 +9,16 @@ export default class ApnClient {
   }
 
   _connect() {
+    const config = this.config;
+
+    if (!config || !config.token || !config.token.key) {
+      return;
+    }
+
     this.provider = new apn.Provider({
-      production: this.config.production,
+      production: config.production,
       token: {
-        ...this.config.token
+        ...config.token
       }
     });
 
@@ -21,6 +27,10 @@ export default class ApnClient {
 
   send(message, deviceToken) {
     const notification = new apn.Notification();
+
+    if (!this.provider) {
+      return;
+    }
 
     notification.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
     notification.badge = 1;
