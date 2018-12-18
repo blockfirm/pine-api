@@ -70,6 +70,7 @@ Endpoints for retrieving and submitting information to the bitcoin blockchain an
 | POST | [/v1/bitcoin/subscriptions](#post-v1bitcoinsubscriptions) | Subscribe to push notifications for specified addresses |
 | GET | [/v1/bitcoin/subscriptions/:deviceToken](#get-v1bitcoinsubscriptionsdevicetoken) | Get metadata about subscriptions for a device token |
 | DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | Unsubscribe from all push notifications |
+| POST | [/v1/notifications](#post-v1notifications) | Used by other nodes to send push notifications through an official Pine node |
 
 ### `GET` /v1/info
 
@@ -317,6 +318,21 @@ An endpoint for unsubscribing from all push notifications for the specified devi
 | Name | Type | Description |
 | --- | --- | --- |
 | deviceToken | *string* | Device token to unsubscribe. |
+
+### `POST` /v1/notifications
+
+Sends a push notification to an iOS device using the specified device token.
+
+Used by other nodes that are not managed by Pine to still be able to send push notifications to the
+official Pine app.
+
+#### Body
+
+Encoded as JSON.
+
+| Name | Type | Description |
+| --- | --- | --- |
+| deviceToken | *string* | Device token to send the notification to. |
 
 ### Error handling
 
