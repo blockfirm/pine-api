@@ -9,9 +9,15 @@ export default class RedisClient {
   }
 
   _connect() {
+    const config = this.config;
+
+    if (!config || !config.host) {
+      return;
+    }
+
     this.client = redis.createClient(
-      this.config.port,
-      this.config.host,
+      config.port,
+      config.host,
       {
         // eslint-disable-next-line camelcase
         retry_strategy: () => RECONNECT_INTERVAL // Try to reconnect after 2 seconds.
