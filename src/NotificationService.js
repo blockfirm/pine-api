@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { unsubscribe } from './endpoints/bitcoin/subscriptions/deleteById';
 
 export default class NotificationService {
   constructor(config, context) {
@@ -11,7 +12,7 @@ export default class NotificationService {
         console.log('[NOTIFICATIONS] ✅ Notification filter loaded');
       })
       .catch((error) => {
-        console.error('[NOTIFICATIONS] 🔥 Error loading notification filter: ', error.message);
+        console.error('[NOTIFICATIONS] 🔥 Error loading notification filter:', error.message);
       });
   }
 
@@ -40,7 +41,7 @@ export default class NotificationService {
         this._notify(transaction);
       })
       .catch((error) => {
-        console.error('[NOTIFICATIONS] 🔥 Error decoding transaction: ', error.message);
+        console.error('[NOTIFICATIONS] 🔥 Error decoding transaction:', error.message);
       });
   }
 
@@ -66,11 +67,15 @@ export default class NotificationService {
         }
 
         deviceTokens.forEach((deviceToken) => {
+          let promise;
+
           if (webhook) {
-            this._sendWithWebhook(deviceToken);
+            promise = this._sendWithWebhook(deviceToken);
           } else {
-            apn.send(this.config.apn.notifications.newPayment, deviceToken);
+            promise = apn.send(this.config.apn.notifications.newPayment, deviceToken);
           }
+
+          promise.then(this._handleUnsubscribe.bind(this));
         });
       });
     });
@@ -79,9 +84,37 @@ export default class NotificationService {
   _sendWithWebhook(deviceToken) {
     const { webhook } = this.config.notifications;
 
-    axios.post(webhook, { deviceToken })
+    return axios.post(webhook, { deviceToken })
+      .then((response) => {
+        return response.data;
+      })
       .catch((error) => {
-        console.error('[NOTIFY WEBHOOK] 🔥 Error: ', error.message);
+        console.error('[NOTIFICATIONS] 🔥 Error calling webhook:', error.message);
       });
+  }
+
+  _handleUnsubscribe(results) {
+    const { redis } = this.context;
+
+    if (!results || !Array.isArray(results.failed)) {
+      return;
+    }
+
+    results.failed.forEach((result) => {
+      if (!result || !result.device || !result.status) {
+        return;
+      }
+
+      const status = parseInt(result.status);
+      const reason = result.response && result.response.reason;
+
+      if (status >= 400 && status < 500) {
+        console.log(`[NOTIFICATIONS] Unsubscribing (${reason}):`, result.device);
+
+        unsubscribe(redis, result.device).catch((error) => {
+          console.error('[NOTIFICATIONS] 🔥 Error unsubscribing:', error.message);
+        });
+      }
+    });
   }
 }

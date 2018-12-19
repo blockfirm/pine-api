@@ -17,8 +17,8 @@ const post = function post(request, response) {
     }
 
     return this.apn.send(this.config.apn.notifications.newPayment, deviceToken)
-      .then(() => {
-        response.send(200);
+      .then((result) => {
+        response.send(result);
       })
       .catch((error) => {
         throw new HttpInternalServerError(error.message);

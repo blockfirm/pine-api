@@ -29,7 +29,7 @@ export default class ApnClient {
     const notification = new apn.Notification();
 
     if (!this.provider) {
-      return;
+      return Promise.resolve();
     }
 
     notification.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.

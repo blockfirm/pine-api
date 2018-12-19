@@ -373,6 +373,10 @@ Encoded as JSON.
 | --- | --- | --- |
 | deviceToken | *string* | Device token to send the notification to. |
 
+#### Returns
+
+The response from [`apn.Provider#send()`](https://github.com/node-apn/node-apn/blob/master/doc/provider.markdown#class-apnprovider).
+
 ### Error handling
 
 Errors are returned as JSON in the following format:
