@@ -17,6 +17,7 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 * [API Docs](#api)
   * [Endpoints](#endpoints)
   * [Error handling](#error-handling)
+  * [Rate limiting](#rate-limiting)
 * [Use with Bitcoin testnet](#use-with-bitcoin-testnet)
 * [Contributing](#contributing)
 * [Licensing](#licensing)
@@ -365,6 +366,8 @@ Sends a push notification to an iOS device using the specified device token.
 Used by other nodes that are not managed by Pine to still be able to send push notifications to the
 official Pine app.
 
+Rate limited to 2 requests per second with bursts up to 10 requests.
+
 #### Body
 
 Encoded as JSON.
@@ -384,6 +387,24 @@ Errors are returned as JSON in the following format:
 ```json
 {
     "error": "<error message>"
+}
+```
+
+### Rate limiting
+
+The API is rate limited to 10 requests per second with bursts up to 100 requests. The rate limiting is
+based on the [Token Bucket](https://en.wikipedia.org/wiki/Token_bucket) algorithm and can be configured
+in `src/config.js` at `api.rateLimit`.
+
+The limit is per IP number, so if your server is behind a reverse proxy or similar you must change the
+config to rate limit by the `X-Forwarded-For` header instead of the actual IP:
+
+```js
+rateLimit: {
+  ...
+  ip: false,
+  xff: true
+  ...
 }
 ```
 

@@ -26,4 +26,9 @@ const post = function post(request, response) {
   });
 };
 
+post.rateLimit = {
+  burst: 10,
+  rate: 2
+};
+
 export default post;
