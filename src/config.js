@@ -36,6 +36,14 @@ const config = {
     notifications: {
       newPayment: '🗣🍍 You just received a new payment!'
     }
+  },
+  fiatRates: {
+    bitcoinAverage: {
+      publicKey: '',
+      secretKey: ''
+    },
+    updateInterval: 60 * 1000, // 1 minute.
+    expireSeconds: 60 * 60 // 1 hour.
   }
 };
 

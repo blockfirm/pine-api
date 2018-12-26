@@ -73,6 +73,18 @@ export default class RedisClient {
     });
   }
 
+  expire(key, seconds) {
+    return new Promise((resolve, reject) => {
+      this.client.expire(key, seconds, (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve(result);
+      });
+    });
+  }
+
   sadd(key, values) {
     return new Promise((resolve, reject) => {
       this.client.sadd(key, values, (error, result) => {

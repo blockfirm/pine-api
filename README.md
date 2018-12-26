@@ -14,6 +14,7 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 * [Setting up push notifications](#setting-up-push-notifications)
   * [Send notifications to the official Pine app](#send-notifications-to-the-official-pine-app)
   * [Send notifications to your own app](#send-notifications-to-your-own-app)
+* [Setting up the fiat rates service](#setting-up-the-fiat-rates-service)
 * [API Docs](#api)
   * [Endpoints](#endpoints)
   * [Error handling](#error-handling)
@@ -26,8 +27,9 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
 * [btcd](https://github.com/btcsuite/btcd) as a bitcoin node for interacting with the bitcoin network and blockchain
-* [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications (optional)
+* [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications and caching fiat rates
 * [APN](https://developer.apple.com/notifications/) for sending push notifications to iOS devices (optional)
+* [BitcoinAverage](https://bitcoinaverage.com) for getting the latest fiat exchange rates (*Developer Plan* required)
 
 ## Getting started
 
@@ -93,6 +95,18 @@ credentials in `config.js` to be able to receive push notifications.
 Your node will now monitor the blockchain and send a notification with the Apple Push Notifications Service
 every time it finds a matching transaction.
 
+## Setting up the fiat rates service
+
+Fiat exchange rates are provided by [BitcoinAverage](https://bitcoinaverage.com) and updated every minute.
+If you're setting up your own node you will need to create a BitcoinAverage account with the *Developer Plan*
+or higher.
+
+1. Create a BitcoinAverage account
+2. Get your API key
+3. Open `src/config.js`
+4. Enter your key credentials (`publicKey` and `secretKey`) in `fiatRates.bitcoinAverage`
+5. Build and restart the server
+
 ## API
 
 ### Endpoints
@@ -106,7 +120,7 @@ Endpoints for retrieving and submitting information to the bitcoin blockchain an
 | POST | [/v1/bitcoin/transactions](#post-v1bitcointransactions) | Broadcast a signed transaction |
 | GET | [/v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid) | Get a specific transaction by its ID |
 | GET | [/v1/bitcoin/fees/estimate](#get-v1bitcoinfeesestimate) | Get the current estimated transaction fee rate |
-| GET | [/v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates) | *Not implemented yet* |
+| GET | [/v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates) | Get exchange rates for specific fiat currencies |
 | POST | [/v1/bitcoin/subscriptions](#post-v1bitcoinsubscriptions) | Subscribe to push notifications for specified addresses |
 | GET | [/v1/bitcoin/subscriptions/:deviceToken](#get-v1bitcoinsubscriptionsdevicetoken) | Get metadata about subscriptions for a device token |
 | DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | Unsubscribe from all push notifications |
@@ -304,7 +318,6 @@ Estimates the transaction fee to be confirmed in the next number of blocks speci
 
 ### `GET` /v1/bitcoin/fiatrates
 
-**Not yet implemented.**
 Gets the current exchange rates for bitcoin in different fiat currencies.
 
 #### Query String Parameters
@@ -315,7 +328,14 @@ Gets the current exchange rates for bitcoin in different fiat currencies.
 
 #### Returns
 
-Array of fiat exchange rates for the specified currencies.
+Map of fiat exchange rates for the specified currencies.
+
+```
+{
+  "EUR": 3277.00, (number) The price of 1 BTC in EUR
+  "SEK": 33900.68 (number) The price of 1 BTC in SEK
+}
+```
 
 ### `POST` /v1/bitcoin/subscriptions
 

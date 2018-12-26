@@ -88,9 +88,16 @@ describe('setupRoutes.js', () => {
       assert(fakeServer.del.calledWithMatch('/v1/bitcoin/subscriptions/:id'));
     });
 
+    it('registers the route GET /v1/bitcoin/fiatrates', () => {
+      setupRoutes(fakeServer);
+
+      assert(fakeServer.get.called);
+      assert(fakeServer.get.calledWithMatch('/v1/bitcoin/fiatrates'));
+    });
+
     it('wraps each endpoint with wrapEndpoint()', () => {
       setupRoutes(fakeServer);
-      assert.equal(wrapEndpointSpy.callCount, 9);
+      assert.equal(wrapEndpointSpy.callCount, 10);
     });
   });
 });
