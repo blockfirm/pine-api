@@ -46,7 +46,7 @@ export default class FiatRateService {
           console.log('[FIAT RATES] ✅ Fiat rates updated');
         });
       }, (error) => {
-        throw error;
+        console.error('[FIAT RATES] 🔥 Error getting fiat rates for BTC:', error);
       });
     } catch (error) {
       console.error('[FIAT RATES] 🔥 Error getting fiat rates for BTC:', error);
