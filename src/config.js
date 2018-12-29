@@ -34,7 +34,7 @@ const config = {
       teamId: ''
     },
     notifications: {
-      newPayment: '🗣🍍 You just received a new payment!'
+      newPayment: 'You just received a new payment!'
     }
   },
   fiatRates: {
