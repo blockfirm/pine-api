@@ -266,11 +266,7 @@ Returns the transaction together with extra vin data and other useful informatio
             "scriptSig": { the signature script used to redeem the origin transaction
                 "asm": "asm", (string) disassembly of the script
                 "hex": "data", (string) hex-encoded bytes of the script
-            }
-            "prevOut": { data from the origin transaction output with index vout
-                "addresses": ["value",...], (array of string) previous output addresses
-                "value": n.nnn, (numeric) previous output value
-            }
+            },
             "txinwitness": “data", (string) the witness stack for the input
             "sequence": n, (numeric) the script sequence number
         }, ...
