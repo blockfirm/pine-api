@@ -28,7 +28,6 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 * [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
 * [btcd](https://github.com/btcsuite/btcd) as a bitcoin node for interacting with the bitcoin network and blockchain
 * [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications and caching fiat rates
-* [APN](https://developer.apple.com/notifications/) for sending push notifications to iOS devices (optional)
 * [BitcoinAverage](https://bitcoinaverage.com) for getting the latest fiat exchange rates (*Developer Plan* required)
 
 ## Getting started
@@ -61,39 +60,35 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 ## Setting up push notifications
 
-There are two ways to set up push notifications; set it up with your own app with your own keys, or
-send them to the official Pine app through Pine's official node.
+There are two ways to set up push notifications; set up your own notification service with your own app,
+or send them to the official Pine app through Pine's official notification service.
 
 Both methods requires [Redis](https://redis.io) to be installed and running.
 
 ### Send notifications to the official Pine app
 
-**Note: This method will only work once Pine is released and has an official node to send notifications
-through.**
+**Note: This method will only work once Pine is released and has an official service to send
+notifications through.**
 
 This is the only way if you just want to host your own node but still want to use the Pine app from
 the App Store and continue to get push notifications.
 
 1. Open `src/config.js`
-2. Uncomment `notifications.webhook`
+2. Make sure `notifications.webhook` is set to Pine's official Notification Service (default)
 3. Build and restart the server
 
-Your node will now monitor the blockchain and trigger a webhook to Pine's node every time it finds
-a matching transaction. No information other than the device token is sent to Pine's servers.
+Your node will now monitor the blockchain and trigger a webhook to Pine's service every time it finds a matching transaction. No information other than the device token is sent to Pine's servers.
 
 ### Send notifications to your own app
 
-If you are running the app from source you will need to create a new APN key and enter your
-credentials in `config.js` to be able to receive push notifications.
+If you are running the app from source you will need to configure and host your own Notification Service in order to be able to receive push notifications.
 
-1. [Create a new key](https://developer.apple.com/account/ios/authkey) in your Apple Developer account to be used with the Apple Push Notifications Service
-2. Open `src/config.js`
-3. Enter your key credentials (key path, key ID, and team ID) in `apn.token`
-4. Enter your app's bundle ID in `apn.bundleId`
-5. Build and restart the server
+1. Go to <https://github.com/blockfirm/pine-notification-service> and follow the instructions
+1. Open `src/config.js`
+2. Set `notifications.webhook` to your own Notification Service
+3. Build and restart the server
 
-Your node will now monitor the blockchain and send a notification with the Apple Push Notifications Service
-every time it finds a matching transaction.
+Your node will now monitor the blockchain and trigger a webhook to your notification service every time it finds a matching transaction.
 
 ## Setting up the fiat rates service
 
@@ -124,7 +119,6 @@ Endpoints for retrieving and submitting information to the bitcoin blockchain an
 | POST | [/v1/bitcoin/subscriptions](#post-v1bitcoinsubscriptions) | Subscribe to push notifications for specified addresses |
 | GET | [/v1/bitcoin/subscriptions/:deviceToken](#get-v1bitcoinsubscriptionsdevicetoken) | Get metadata about subscriptions for a device token |
 | DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | Unsubscribe from all push notifications |
-| POST | [/v1/notifications](#post-v1notifications) | Used by other nodes to send push notifications through an official Pine node |
 
 ### `GET` /v1/info
 
@@ -374,27 +368,6 @@ An endpoint for unsubscribing from all push notifications for the specified devi
 | Name | Type | Description |
 | --- | --- | --- |
 | deviceToken | *string* | Device token to unsubscribe. |
-
-### `POST` /v1/notifications
-
-Sends a push notification to an iOS device using the specified device token.
-
-Used by other nodes that are not managed by Pine to still be able to send push notifications to the
-official Pine app.
-
-Rate limited to 2 requests per second with bursts up to 10 requests.
-
-#### Body
-
-Encoded as JSON.
-
-| Name | Type | Description |
-| --- | --- | --- |
-| deviceToken | *string* | Device token to send the notification to. |
-
-#### Returns
-
-The response from [`apn.Provider#send()`](https://github.com/node-apn/node-apn/blob/master/doc/provider.markdown#class-apnprovider).
 
 ### Error handling
 

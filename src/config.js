@@ -23,19 +23,7 @@ const config = {
     port: 6379
   },
   notifications: {
-    //webhook: 'http://localhost:8080/v1/notifications'
-  },
-  apn: {
-    production: false,
-    bundleId: 'se.blockfirm.Pine',
-    token: {
-      key: '', // Path to .p8 key file.
-      keyId: '',
-      teamId: ''
-    },
-    notifications: {
-      newPayment: 'You just received a new payment!'
-    }
+    webhook: 'http://localhost:50427/v1/notifications'
   },
   fiatRates: {
     bitcoinAverage: {

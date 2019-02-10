@@ -20,7 +20,6 @@
     "url": "https://github.com/blockfirm/pine-api.git"
   },
   "dependencies": {
-    "apn": "^2.2.0",
     "axios": "^0.18.0",
     "bitcoinaverage": "^1.2.1",
     "bitcoinjs-lib": "^4.0.2",

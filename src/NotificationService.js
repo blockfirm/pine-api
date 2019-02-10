@@ -46,8 +46,7 @@ export default class NotificationService {
   }
 
   _notify(transaction) {
-    const { apn, redis } = this.context;
-    const { webhook } = this.config.notifications;
+    const { redis } = this.context;
 
     if (!transaction || !Array.isArray(transaction.vout)) {
       return;
@@ -67,15 +66,7 @@ export default class NotificationService {
         }
 
         deviceTokens.forEach((deviceToken) => {
-          let promise;
-
-          if (webhook) {
-            promise = this._sendWithWebhook(deviceToken);
-          } else {
-            promise = apn.send(this.config.apn.notifications.newPayment, deviceToken);
-          }
-
-          promise.then(this._handleUnsubscribe.bind(this));
+          this._sendWithWebhook(deviceToken).then(this._handleUnsubscribe.bind(this));
         });
       });
     });
