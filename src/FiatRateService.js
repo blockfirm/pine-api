@@ -25,8 +25,8 @@ export default class FiatRateService {
   _update() {
     const { redis } = this.context;
 
-    try {
-      this.client.tickerAll('global', 'BTC', '', (response) => {
+    this.client.tickerAll('global', 'BTC', '', (response) => {
+      try {
         if (!response) {
           throw new Error('Empty response from BitcoinAverage');
         }
@@ -45,11 +45,11 @@ export default class FiatRateService {
         Promise.all(promises).then(() => {
           console.log('[FIAT RATES] ✅ Fiat rates updated');
         });
-      }, (error) => {
+      } catch (error) {
         console.error('[FIAT RATES] 🔥 Error getting fiat rates for BTC:', error);
-      });
-    } catch (error) {
+      }
+    }, (error) => {
       console.error('[FIAT RATES] 🔥 Error getting fiat rates for BTC:', error);
-    }
+    });
   }
 }
