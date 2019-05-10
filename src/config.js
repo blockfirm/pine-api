@@ -23,7 +23,8 @@ const config = {
     port: 6379
   },
   notifications: {
-    webhook: 'http://localhost:50427/v1/notifications'
+    webhook: 'http://localhost:50427/v1/notifications',
+    apiKey: ''
   },
   fiatRates: {
     bitcoinAverage: {

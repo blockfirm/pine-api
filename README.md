@@ -61,7 +61,7 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 ## Setting up push notifications
 
 There are two ways to set up push notifications; set up your own notification service with your own app,
-or send them to the official Pine app through Pine's official notification service.
+or send them to the official Pine app through Pine's official notification service (requires API key).
 
 Both methods requires [Redis](https://redis.io) to be installed and running.
 
@@ -75,7 +75,8 @@ the App Store and continue to get push notifications.
 
 1. Open `src/config.js`
 2. Make sure `notifications.webhook` is set to Pine's official Notification Service (default)
-3. Build and restart the server
+3. Request an API key from Pine (coming soon) and enter it in `notifications.apiKey`
+4. Build and restart the server
 
 Your node will now monitor the blockchain and trigger a webhook to Pine's service every time it finds a matching transaction. No information other than the device token is sent to Pine's servers.
 
@@ -84,9 +85,10 @@ Your node will now monitor the blockchain and trigger a webhook to Pine's servic
 If you are running the app from source you will need to configure and host your own Notification Service in order to be able to receive push notifications.
 
 1. Go to <https://github.com/blockfirm/pine-notification-service> and follow the instructions
-1. Open `src/config.js`
-2. Set `notifications.webhook` to your own Notification Service
-3. Build and restart the server
+2. Open `src/config.js`
+3. Set `notifications.webhook` to your own Notification Service
+4. Set `notifications.apiKey` to your [obtained API key](https://github.com/blockfirm/pine-notification-service#obtaining-an-api-key)
+5. Build and restart the server
 
 Your node will now monitor the blockchain and trigger a webhook to your notification service every time it finds a matching transaction.
 
