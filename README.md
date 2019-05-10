@@ -46,13 +46,14 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
     ```
     $ npm install
     ```
-5. Open `src/config.js` and enter your btcd RPC username and password
+5. Rename `src/config.template.js` to `src/config.js`
+6. Open `src/config.js` and enter your btcd RPC username and password
 
-6. Start the API server in development mode:
+7. Start the API server in development mode:
     ```
     $ npm run dev
     ```
-7. Or build it and run in production mode:
+8. Or build it and run in production mode:
     ```
     $ npm run build
     $ npm start
