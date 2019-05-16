@@ -1,6 +1,6 @@
 {
   "name": "pine-api",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "REST API for Pine to interact with the bitcoin blockchain and network.",
   "main": "src/server.js",
   "scripts": {
