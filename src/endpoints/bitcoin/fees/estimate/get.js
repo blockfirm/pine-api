@@ -1,7 +1,7 @@
 import { HttpBadRequest, HttpInternalServerError } from '../../../../errors';
 
 const get = function get(request, response) {
-  const params = request.params;
+  const params = request.query;
 
   return Promise.resolve().then(() => {
     const { numberOfBlocks } = params;
