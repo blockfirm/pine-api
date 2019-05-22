@@ -11,9 +11,6 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Dependencies](#dependencies)
 * [Getting started](#getting-started)
-* [Setting up push notifications](#setting-up-push-notifications)
-  * [Send notifications to the official Pine app](#send-notifications-to-the-official-pine-app)
-  * [Send notifications to your own app](#send-notifications-to-your-own-app)
 * [Setting up the fiat rates service](#setting-up-the-fiat-rates-service)
 * [API Docs](#api)
   * [Endpoints](#endpoints)
@@ -27,7 +24,7 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
 * [btcd](https://github.com/btcsuite/btcd) as a bitcoin node for interacting with the bitcoin network and blockchain
-* [Redis](https://redis.io) for caching device tokens and addresses that should be used for sending notifications and caching fiat rates
+* [Redis](https://redis.io) for caching fiat rates
 * [BitcoinAverage](https://bitcoinaverage.com) for getting the latest fiat exchange rates (*Developer Plan* required)
 
 ## Getting started
@@ -59,40 +56,6 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
     $ npm start
     ```
 
-## Setting up push notifications
-
-There are two ways to set up push notifications; set up your own notification service with your own app,
-or send them to the official Pine app through Pine's official notification service (requires API key).
-
-Both methods requires [Redis](https://redis.io) to be installed and running.
-
-### Send notifications to the official Pine app
-
-**Note: This method will only work once Pine is released and has an official service to send
-notifications through.**
-
-This is the only way if you just want to host your own node but still want to use the Pine app from
-the App Store and continue to get push notifications.
-
-1. Open `src/config.js`
-2. Make sure `notifications.webhook` is set to Pine's official Notification Service (default)
-3. Request an API key from Pine (coming soon) and enter it in `notifications.apiKey`
-4. Build and restart the server
-
-Your node will now monitor the blockchain and trigger a webhook to Pine's service every time it finds a matching transaction. No information other than the device token is sent to Pine's servers.
-
-### Send notifications to your own app
-
-If you are running the app from source you will need to configure and host your own Notification Service in order to be able to receive push notifications.
-
-1. Go to <https://github.com/blockfirm/pine-notification-service> and follow the instructions
-2. Open `src/config.js`
-3. Set `notifications.webhook` to your own Notification Service
-4. Set `notifications.apiKey` to your [obtained API key](https://github.com/blockfirm/pine-notification-service#obtaining-an-api-key)
-5. Build and restart the server
-
-Your node will now monitor the blockchain and trigger a webhook to your notification service every time it finds a matching transaction.
-
 ## Setting up the fiat rates service
 
 Fiat exchange rates are provided by [BitcoinAverage](https://bitcoinaverage.com) and updated every minute.
@@ -119,9 +82,6 @@ Endpoints for retrieving and submitting information to the bitcoin blockchain an
 | GET | [/v1/bitcoin/transactions/:txid](#get-v1bitcointransactionstxid) | Get a specific transaction by its ID |
 | GET | [/v1/bitcoin/fees/estimate](#get-v1bitcoinfeesestimate) | Get the current estimated transaction fee rate |
 | GET | [/v1/bitcoin/fiatrates](#get-v1bitcoinfiatrates) | Get exchange rates for specific fiat currencies |
-| POST | [/v1/bitcoin/subscriptions](#post-v1bitcoinsubscriptions) | Subscribe to push notifications for specified addresses |
-| GET | [/v1/bitcoin/subscriptions/:deviceToken](#get-v1bitcoinsubscriptionsdevicetoken) | Get metadata about subscriptions for a device token |
-| DELETE | [/v1/bitcoin/subscriptions/:deviceToken](#delete-v1bitcoinsubscriptionsdevicetoken) | Unsubscribe from all push notifications |
 
 ### `GET` /v1/info
 
@@ -329,48 +289,6 @@ Map of fiat exchange rates for the specified currencies.
   "SEK": 33900.68 (number) The price of 1 BTC in SEK
 }
 ```
-
-### `POST` /v1/bitcoin/subscriptions
-
-An endpoint for subscribing to push notifications when new payments are received.
-Currently only supports sending notifications using Apple Push Notification Service.
-
-#### Body
-
-Encoded as JSON.
-
-| Name | Type | Description |
-| --- | --- | --- |
-| deviceToken | *string* | Device token to use when sending the notifications. |
-| addresses | *array of strings* | Array of bitcoin addresses to subscribe to. Maximum 1000 addresses per request. |
-
-### `GET` /v1/bitcoin/subscriptions/:deviceToken
-
-Returns metadata about the subscriptions for the specified device token.
-
-#### Parameters
-
-| Name | Type | Description |
-| --- | --- | --- |
-| deviceToken | *string* | Device token to get information about. |
-
-#### Returns
-
-```
-{
-  "numberOfSubscriptions": 3 (number) The number of subscriptions this device token has subscribed to
-}
-```
-
-### `DELETE` /v1/bitcoin/subscriptions/:deviceToken
-
-An endpoint for unsubscribing from all push notifications for the specified device token.
-
-#### Parameters
-
-| Name | Type | Description |
-| --- | --- | --- |
-| deviceToken | *string* | Device token to unsubscribe. |
 
 ### Error handling
 

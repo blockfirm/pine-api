@@ -1,6 +1,5 @@
 import { BtcdClient } from './btcd';
 import { RedisClient } from './redis';
-import NotificationService from './NotificationService';
 import FiatRateService from './FiatRateService';
 
 const createContext = (config) => {
@@ -10,7 +9,6 @@ const createContext = (config) => {
     config
   };
 
-  context.notifications = new NotificationService(config, context);
   context.fiatRates = new FiatRateService(config.fiatRates, context);
 
   return context;
