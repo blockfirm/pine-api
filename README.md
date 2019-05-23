@@ -11,7 +11,7 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Dependencies](#dependencies)
 * [Getting started](#getting-started)
-* [Setting up the fiat rates service](#setting-up-the-fiat-rates-service)
+* [Setting up the fiat rate service](#setting-up-the-fiat-rate-service)
 * [API Docs](#api)
   * [Endpoints](#endpoints)
   * [Error handling](#error-handling)
@@ -24,8 +24,8 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
 
 * [Node.js](https://nodejs.org) and [Restify](http://restify.com) for creating the REST API
 * [btcd](https://github.com/btcsuite/btcd) as a bitcoin node for interacting with the bitcoin network and blockchain
+* [BitcoinAverage](https://bitcoinaverage.com) for getting the latest fiat exchange rates (optional)
 * [Redis](https://redis.io) for caching fiat rates
-* [BitcoinAverage](https://bitcoinaverage.com) for getting the latest fiat exchange rates (*Developer Plan* required)
 
 ## Getting started
 
@@ -56,11 +56,13 @@ REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockcha
     $ npm start
     ```
 
-## Setting up the fiat rates service
+## Setting up the fiat rate service
+
+The official Pine app will always use Pine's fiat rate service to ensure a consistent user experience.
+This step is only necessary if you're running the app yourself together with your own node.
 
 Fiat exchange rates are provided by [BitcoinAverage](https://bitcoinaverage.com) and updated every minute.
-If you're setting up your own node you will need to create a BitcoinAverage account with the *Developer Plan*
-or higher.
+You will need to create a BitcoinAverage account with the *Developer Plan* or higher.
 
 1. Create a BitcoinAverage account
 2. Get your API key
@@ -255,6 +257,9 @@ Returns the transaction together with extra vin data and other useful informatio
 
 Estimates the transaction fee to be confirmed in the next number of blocks specified by `numberOfBlocks`.
 
+**Note:** The official Pine app will always use Pine's fee estimation service to ensure a
+consistent user experience.
+
 #### Query String Parameters
 
 | Name | Type | Description |
@@ -272,6 +277,9 @@ Estimates the transaction fee to be confirmed in the next number of blocks speci
 ### `GET` /v1/bitcoin/fiatrates
 
 Gets the current exchange rates for bitcoin in different fiat currencies.
+
+**Note:** The official Pine app will always use Pine's fiat rate service to ensure a
+consistent user experience.
 
 #### Query String Parameters
 

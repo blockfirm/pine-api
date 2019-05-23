@@ -1,7 +1,13 @@
-import { HttpBadRequest, HttpInternalServerError } from '../../../errors';
+import { HttpBadRequest, HttpInternalServerError, HttpNotImplemented } from '../../../errors';
 
 const get = function get(request, response) {
   const params = request.query;
+
+  if (!this.config.fiatRates.enabled) {
+    throw new HttpNotImplemented(
+      'The fiat rate service has not been enabled on this server'
+    );
+  }
 
   return Promise.resolve().then(() => {
     if (!params.currencies || typeof params.currencies !== 'string') {

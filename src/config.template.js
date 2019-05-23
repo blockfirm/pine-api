@@ -19,10 +19,12 @@ const config = {
     }
   },
   redis: {
+    enabled: false,
     host: '127.0.0.1',
     port: 6379
   },
   fiatRates: {
+    enabled: false,
     bitcoinAverage: {
       publicKey: '',
       secretKey: ''

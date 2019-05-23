@@ -11,7 +11,7 @@ export default class RedisClient {
   _connect() {
     const config = this.config;
 
-    if (!config || !config.host) {
+    if (!config || !config.enabled || !config.host) {
       return;
     }
 

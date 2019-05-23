@@ -5,6 +5,10 @@ export default class FiatRateService {
     this.config = config;
     this.context = context;
 
+    if (!config.enabled) {
+      return;
+    }
+
     this.client = bitcoinaverage.restfulClient(
       config.bitcoinAverage.publicKey,
       config.bitcoinAverage.secretKey
