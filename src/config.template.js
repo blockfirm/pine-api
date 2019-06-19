@@ -1,6 +1,6 @@
 const config = {
   bitcoin: {
-    network: 'testnet', // 'mainnet' or 'testnet'
+    network: 'mainnet', // 'mainnet' or 'testnet'
     btcd: {
       uri: 'ws://127.0.0.1:18334/ws',
       username: '',
