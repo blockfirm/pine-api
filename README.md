@@ -5,7 +5,7 @@ Pine API
 [![Build Status](https://img.shields.io/travis/blockfirm/pine-api.svg?branch=master&style=flat-square)](https://travis-ci.org/blockfirm/pine-api)
 [![Coverage Status](https://img.shields.io/coveralls/blockfirm/pine-api.svg?style=flat-square)](https://coveralls.io/r/blockfirm/pine-api)
 
-REST API for [Pine](https://pinewallet.co) to interact with the bitcoin blockchain and network.
+REST API for [Pine](https://pine.pm) to interact with the bitcoin blockchain and network.
 
 ## Table of Contents
 
