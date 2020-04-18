@@ -14,22 +14,33 @@ server.use(restify.plugins.throttle(config.api.rateLimit));
 
 // eslint-disable-next-line max-params
 server.on('after', (request, response, route, error) => {
+  const { method } = request;
+  const { statusCode, statusMessage } = response;
+
   if (error) {
     return logger.error(
-      `HTTP ${response.statusCode} ${response.statusMessage} ${request.method} ${request.url}: ${error.message}`, {
+      `HTTP ${statusCode} ${statusMessage} ${method} ${request.url}: ${error.message}`, {
         scope: 'Api',
-        method: request.method,
         route: route && route.path,
-        status: response.statusCode
+        status: statusCode,
+        method
       }
     );
   }
 
-  logger.info(
-    `HTTP ${response.statusCode} ${response.statusMessage} ${request.method} ${route.path}`, {
-      method: request.method,
+  let logFunction;
+
+  if (statusCode < 200 || statusCode > 299) {
+    logFunction = logger.error.bind(logger);
+  } else {
+    logFunction = logger.info.bind(logger);
+  }
+
+  logFunction(
+    `HTTP ${statusCode} ${statusMessage} ${method} ${route.path}`, {
       route: route.path,
-      status: response.statusCode
+      status: statusCode,
+      method
     }
   );
 });
