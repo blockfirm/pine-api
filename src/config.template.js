@@ -2,9 +2,10 @@ const config = {
   bitcoin: {
     network: 'mainnet', // 'mainnet' or 'testnet'
     btcd: {
-      uri: 'ws://127.0.0.1:18334/ws',
+      uri: 'wss://127.0.0.1:18334/ws',
       username: '',
-      password: ''
+      password: '',
+      certificatePath: '~/.btcd/rpc.cert'
     }
   },
   api: {

@@ -1,4 +1,5 @@
 /* eslint-disable max-lines */
+import fs from 'fs';
 import WebSocket from 'ws';
 
 const JSON_RPC_VERSION = '1.0';
@@ -15,17 +16,18 @@ export default class BtcdClient {
   }
 
   _connect() {
-    const config = this.config;
-    const username = config.username;
-    const password = config.password;
+    const { uri, username, password, certificatePath } = this.config;
+    const cert = certificatePath && fs.readFileSync(certificatePath);
 
     this._disconnect();
 
-    this.websocket = new WebSocket(config.uri, {
+    this.websocket = new WebSocket(uri, {
       headers: {
         // eslint-disable-next-line prefer-template
         Authorization: 'Basic ' + new Buffer(`${username}:${password}`).toString('base64')
-      }
+      },
+      ca: [cert],
+      cert
     });
 
     this.callCounter = 0;
