@@ -63,7 +63,7 @@ describe('endpoints/bitcoin/transactions/post.js', () => {
     });
 
     describe('when client.sendRawTransaction(transaction) rejects', () => {
-      it('rejects the returned promise with HttpInternalServerError', () => {
+      it('rejects the returned promise with the error', () => {
         const fakeError = new Error('060bdb8b-8d68-4114-a93b-ed8e5f5a457e');
 
         fakeClient.sendRawTransaction = sinon.spy(() => {
@@ -77,7 +77,7 @@ describe('endpoints/bitcoin/transactions/post.js', () => {
             assert(false, 'Did not reject the returned promise');
           })
           .catch((error) => {
-            assert(error instanceof HttpInternalServerError);
+            assert(error === fakeError);
           });
       });
     });

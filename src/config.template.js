@@ -32,6 +32,10 @@ const config = {
     },
     updateInterval: 60 * 1000, // 1 minute.
     expireSeconds: 60 * 60 // 1 hour.
+  },
+  log: {
+    level: 'info', // One of 'info', 'warn', 'error'.
+    dir: '/var/log/pine'
   }
 };
 

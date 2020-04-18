@@ -1,18 +1,26 @@
+/* eslint-disable max-lines */
 import redis from 'redis';
+import logger from '../logger';
 
 const RECONNECT_INTERVAL = 2000;
 
 export default class RedisClient {
   constructor(config) {
     this.config = config;
-    this._connect();
+    this.logger = logger.child({ scope: 'RedisClient' });
+
+    try {
+      this._connect();
+    } catch (error) {
+      this.logger.error(`Unable to connect to redis: ${error.message}`);
+    }
   }
 
   _connect() {
     const config = this.config;
 
     if (!config || !config.enabled || !config.host) {
-      return;
+      return this.logger.warn('Cannot connect to redis, missing configuration');
     }
 
     this.client = redis.createClient(
@@ -25,15 +33,15 @@ export default class RedisClient {
     );
 
     this.client.on('connect', () => {
-      console.log('[REDIS] ✅ Connected');
+      this.logger.info(`Connected to redis at ${config.host}:${config.port}`);
     });
 
     this.client.on('reconnecting', () => {
-      console.log('[REDIS] ♻️  Reconnecting...');
+      this.logger.warn('Reconnecting to redis...');
     });
 
     this.client.on('error', (error) => {
-      console.error('[REDIS] 🔥 Error: ', error.message);
+      this.logger.error(`Redis error: ${error.message}`);
     });
   }
 

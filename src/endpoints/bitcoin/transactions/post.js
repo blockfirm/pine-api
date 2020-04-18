@@ -1,4 +1,4 @@
-import { HttpBadRequest, HttpInternalServerError } from '../../../errors';
+import { HttpBadRequest } from '../../../errors';
 
 const post = function post(request, response) {
   const transaction = request.params.transaction;
@@ -13,9 +13,6 @@ const post = function post(request, response) {
     return this.btcd.sendRawTransaction(transaction)
       .then((txid) => {
         response.send({ txid });
-      })
-      .catch((error) => {
-        throw new HttpInternalServerError(error.message);
       });
   });
 };

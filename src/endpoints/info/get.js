@@ -1,5 +1,3 @@
-import { HttpInternalServerError } from '../../errors';
-
 const get = function get(request, response) {
   return this.btcd.getInfo()
     .then((info) => {
@@ -15,9 +13,6 @@ const get = function get(request, response) {
         network: this.config.bitcoin.network,
         blocks: 0
       });
-    })
-    .catch((error) => {
-      throw new HttpInternalServerError(error.message);
     });
 };
 

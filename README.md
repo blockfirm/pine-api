@@ -45,12 +45,15 @@ REST API for [Pine](https://pine.pm) to interact with the bitcoin blockchain and
     ```
 5. Rename `src/config.template.js` to `src/config.js`
 6. Open `src/config.js` and enter your btcd RPC username and password
-
-7. Start the API server in development mode:
+7. Create a log directory:
+    ```
+    $ mkdir /var/log/pine
+    ```
+8. Start the API server in development mode:
     ```
     $ npm run dev
     ```
-8. Or build it and run in production mode:
+9. Or build it and run in production mode:
     ```
     $ npm run build
     $ npm start

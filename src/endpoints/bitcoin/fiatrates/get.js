@@ -1,4 +1,4 @@
-import { HttpBadRequest, HttpInternalServerError, HttpNotImplemented } from '../../../errors';
+import { HttpBadRequest, HttpNotImplemented } from '../../../errors';
 
 const get = function get(request, response) {
   const params = request.query;
@@ -43,9 +43,6 @@ const get = function get(request, response) {
         });
 
         response.send(rates);
-      })
-      .catch((error) => {
-        throw new HttpInternalServerError(error.message);
       });
   });
 };

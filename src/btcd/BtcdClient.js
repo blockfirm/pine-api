@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 import fs from 'fs';
 import WebSocket from 'ws';
+import logger from '../logger';
 
 const JSON_RPC_VERSION = '1.0';
 const RECONNECT_INTERVAL = 1000;
@@ -12,7 +13,17 @@ const ERROR_CODE_NO_INFORMATION_AVAILABLE = -5;
 export default class BtcdClient {
   constructor(config) {
     this.config = config;
-    this._connect();
+    this.logger = logger.child({ scope: 'BtcdClient' });
+
+    this._tryConnect();
+  }
+
+  _tryConnect() {
+    try {
+      this._connect();
+    } catch (error) {
+      this.logger.error(`Unable to connect to btcd: ${error.message}`);
+    }
   }
 
   _connect() {
@@ -178,11 +189,11 @@ export default class BtcdClient {
   onRelevantTxAccepted() {}
 
   _onOpen() {
-    console.log('[BTCD] ✅ Connected');
+    this.logger.info(`Connected to btcd at ${this.config.uri}`);
   }
 
   _onClose(code) {
-    console.error(`[BTCD] ⛔️ Disconnected (${code})`);
+    this.logger.error(`Disconnected from btcd (code: ${code})`);
 
     if (code === ERROR_CODE_NORMAL_CLOSE) {
       return;
@@ -190,12 +201,12 @@ export default class BtcdClient {
 
     // Try to reconnect.
     setTimeout(() => {
-      this._connect();
+      this._tryConnect();
     }, RECONNECT_INTERVAL);
   }
 
   _onError(error) {
-    console.error('[BTCD] 🔥 Error: ', error.message);
+    this.logger.error(`Btcd error: ${error.message}`);
   }
 
   _onMessage(message) {

@@ -1,12 +1,16 @@
 import bitcoinaverage from 'bitcoinaverage';
+import logger from './logger';
 
 export default class FiatRateService {
   constructor(config, context) {
     this.config = config;
     this.context = context;
+    this.logger = logger.child({ scope: 'FiatRateService' });
 
     if (!config.enabled) {
-      return;
+      return this.logger.warn(
+        'Fiat Rates Service will not be started - it has not been enabled in config'
+      );
     }
 
     this.client = bitcoinaverage.restfulClient(
@@ -15,7 +19,6 @@ export default class FiatRateService {
     );
 
     this._start();
-    console.log('[FIAT RATES] ✅ Service started');
   }
 
   _start() {
@@ -24,6 +27,8 @@ export default class FiatRateService {
 
     // Update fiat rates with an interval.
     this._interval = setInterval(this._update.bind(this), this.config.updateInterval);
+
+    this.logger.info('Fiat Rate Service started');
   }
 
   _update() {
@@ -47,13 +52,13 @@ export default class FiatRateService {
         });
 
         Promise.all(promises).then(() => {
-          console.log('[FIAT RATES] ✅ Fiat rates updated');
+          this.logger.info('Fiat rates updated successfully');
         });
       } catch (error) {
-        console.error('[FIAT RATES] 🔥 Error getting fiat rates for BTC:', error);
+        this.logger.error(`Error when updating fiat rates for BTC: ${error.message}`);
       }
     }, (error) => {
-      console.error('[FIAT RATES] 🔥 Error getting fiat rates for BTC:', error);
+      this.logger.error(`Error when updating fiat rates for BTC: ${error.message}`);
     });
   }
 }

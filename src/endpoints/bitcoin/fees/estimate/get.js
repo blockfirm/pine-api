@@ -1,4 +1,4 @@
-import { HttpBadRequest, HttpInternalServerError } from '../../../../errors';
+import { HttpBadRequest } from '../../../../errors';
 
 const get = function get(request, response) {
   const params = request.query;
@@ -25,9 +25,6 @@ const get = function get(request, response) {
         const satoshisPerByte = btcPerByte * 100000000;
 
         response.send({ satoshisPerByte });
-      })
-      .catch((error) => {
-        throw new HttpInternalServerError(error.message);
       });
   });
 };

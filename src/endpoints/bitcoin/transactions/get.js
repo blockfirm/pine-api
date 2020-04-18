@@ -1,4 +1,4 @@
-import { HttpBadRequest, HttpInternalServerError } from '../../../errors';
+import { HttpBadRequest } from '../../../errors';
 
 const mapResults = (results) => {
   const addressMap = {};
@@ -63,9 +63,6 @@ const get = function get(request, response) {
       .then(mapResults)
       .then((addressMap) => {
         response.send(addressMap);
-      })
-      .catch((error) => {
-        throw new HttpInternalServerError(error.message);
       });
   });
 };
