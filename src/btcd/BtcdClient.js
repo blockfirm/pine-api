@@ -37,6 +37,7 @@ export default class BtcdClient {
         // eslint-disable-next-line prefer-template
         Authorization: 'Basic ' + new Buffer(`${username}:${password}`).toString('base64')
       },
+      rejectUnauthorized: false,
       ca: [cert],
       cert
     });
