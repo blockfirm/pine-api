@@ -22,7 +22,7 @@
   "dependencies": {
     "bitcoinaverage": "^1.4.2",
     "bitcoinjs-lib": "^4.0.5",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "restify": "^8.5.1",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.2",
